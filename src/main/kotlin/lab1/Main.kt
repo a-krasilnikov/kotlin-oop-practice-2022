@@ -28,14 +28,25 @@ fun parseBooks(books: String): List<Book> {
     return booksList
 }
 
+fun findTheOldestBooks(bookList: List<Book>): List<Book> {
+    if (bookList.isEmpty()) error("book list shouldn't be empty")
+    val minYear = bookList.minOf { it.year }
+    return bookList.filter { it.year == minYear }
+}
+
 fun main() {
     val strokeForParsing = "1. Eugene Onegin // Alexander Sergeyevich Pushkin // 1831\n" +
             "2. Snail on the Slope // Arkady Natanovich Strugatsky, Boris Natanovich Strugatsky // 1965\n" +
-            "3. The Master and Margarita // Mikhail Afanasyevich Bulgakov // 1940\n"
-    val list = parseBooks( strokeForParsing )
+            "3. The Young Peasant Woman // Alexander Sergeyevich Pushkin // 1831\n"
+    val bookList = parseBooks(strokeForParsing)
 
-    println("Stroke for parsing:\n" +
-            "$strokeForParsing\n" +
-            "Result:\n" +
-            "$list.toString()\n")
+    println(
+        "Stroke for parsing:\n" +
+                "$strokeForParsing\n" +
+                "Result:\n" +
+                "$bookList.toString()\n"
+    )
+
+    println("The oldest in the list:\n" +
+            "${findTheOldestBooks(bookList)}\n")
 }
