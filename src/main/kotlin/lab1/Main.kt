@@ -3,6 +3,7 @@ package lab1
 fun parseBooks(books: String): List<Book> {
 
     val booksList = mutableListOf<Book>()
+
     val delimiter = "//"
 
     books.lines().forEach {
