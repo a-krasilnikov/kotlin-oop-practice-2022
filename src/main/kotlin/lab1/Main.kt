@@ -34,6 +34,18 @@ fun findTheOldestBooks(bookList: List<Book>): List<Book> {
     return bookList.filter { it.year == minYear }
 }
 
+fun findTheBooksWithTheLongestTitle(bookList: List<Book>): List<Book> {
+    if (bookList.isEmpty()) error("book list shouldn't be empty")
+    val maxTitle = bookList.maxOf { it.title.length }
+    return bookList.filter { it.title.length == maxTitle }
+}
+
+fun findTheBooksWithTheShortestTitle(bookList: List<Book>): List<Book> {
+    if (bookList.isEmpty()) error("book list shouldn't be empty")
+    val minTitle = bookList.minOf { it.title.length }
+    return bookList.filter { it.title.length == minTitle }
+}
+
 fun main() {
     val strokeForParsing = "1. Eugene Onegin // Alexander Sergeyevich Pushkin // 1831\n" +
             "2. Snail on the Slope // Arkady Natanovich Strugatsky, Boris Natanovich Strugatsky // 1965\n" +
@@ -47,6 +59,12 @@ fun main() {
                 "$bookList.toString()\n"
     )
 
-    println("The oldest in the list:\n" +
+    println("The oldest books in the list:\n" +
             "${findTheOldestBooks(bookList)}\n")
+
+    println("The books with the longest titles in the list:\n" +
+            "${findTheBooksWithTheLongestTitle(bookList)}\n")
+
+    println("The books with the shortest titles in the list:\n" +
+            "${findTheBooksWithTheShortestTitle(bookList)}\n")
 }
