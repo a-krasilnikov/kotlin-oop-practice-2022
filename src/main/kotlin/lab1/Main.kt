@@ -59,12 +59,18 @@ fun main() {
                 "$bookList.toString()\n"
     )
 
-    println("The oldest books in the list:\n" +
-            "${findTheOldestBooks(bookList)}\n")
+    println(
+        "The oldest books in the list:\n" +
+                "${findTheOldestBooks(bookList)}\n"
+    )
 
-    println("The books with the longest titles in the list:\n" +
-            "${findTheBooksWithTheLongestTitle(bookList)}\n")
+    println(
+        "The books with the longest titles in the list:\n" +
+                "${findTheBooksWithTheLongestTitle(bookList)}\n"
+    )
 
-    println("The books with the shortest titles in the list:\n" +
-            "${findTheBooksWithTheShortestTitle(bookList)}\n")
+    println(
+        "The books with the shortest titles in the list:\n" +
+                "${findTheBooksWithTheShortestTitle(bookList)}\n"
+    )
 }
