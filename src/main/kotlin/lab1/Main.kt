@@ -34,6 +34,12 @@ fun findTheOldestBooks(bookList: List<Book>): List<Book> {
     return bookList.filter { it.year == minYear }
 }
 
+fun findTheYoungestBooks(bookList: List<Book>): List<Book> {
+    if (bookList.isEmpty()) error("book list shouldn't be empty")
+    val maxYear = bookList.maxOf { it.year }
+    return bookList.filter { it.year == maxYear }
+}
+
 fun findTheBooksWithTheLongestTitle(bookList: List<Book>): List<Book> {
     if (bookList.isEmpty()) error("book list shouldn't be empty")
     val maxTitle = bookList.maxOf { it.title.length }
@@ -62,6 +68,11 @@ fun main() {
     println(
         "The oldest books in the list:\n" +
                 "${findTheOldestBooks(bookList)}\n"
+    )
+
+    println(
+        "The youngest books in the list:\n" +
+                "${findTheYoungestBooks(bookList)}\n"
     )
 
     println(

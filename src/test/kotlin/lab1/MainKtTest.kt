@@ -70,11 +70,39 @@ internal class MainKtTest {
             Book("Snail on the Slope", listOf("Arkady Natanovich Strugatsky", "Boris Natanovich Strugatsky"), 1965),
             Book("The Young Peasant Woman", listOf("Alexander Sergeyevich Pushkin"), 1831)
         )
-        println(findTheOldestBooks(bookListWithThreeStroke))
+
         assertTrue(
             listOf(theYoungPeasantWoman, eugeneOnegin) == findTheOldestBooks(bookListWithThreeStroke) ||
                     listOf(eugeneOnegin, theYoungPeasantWoman) == findTheOldestBooks(bookListWithThreeStroke)
         )
+    }
+
+    @Test
+    fun findTheYoungestBooks() {
+        val bookListWithOneStroke = listOf(
+            Book(
+                "Snail on the Slope",
+                listOf("Arkady Natanovich Strugatsky", "Boris Natanovich Strugatsky"), 1965
+            )
+        )
+        assertEquals(listOf(snailOnTheSlope), findTheYoungestBooks(bookListWithOneStroke))
+
+
+        val bookListWithTwoStroke = listOf(
+            Book("Eugene Onegin", listOf("Alexander Sergeyevich Pushkin"), 1831),
+            Book("The Young Peasant Woman", listOf("Alexander Sergeyevich Pushkin"), 1831)
+        )
+
+        assertTrue(
+            listOf(theYoungPeasantWoman, eugeneOnegin) == findTheOldestBooks(bookListWithTwoStroke) ||
+                    listOf(eugeneOnegin, theYoungPeasantWoman) == findTheOldestBooks(bookListWithTwoStroke)
+        )
+        val bookListWithThreeStroke = listOf(
+            Book("Eugene Onegin", listOf("Alexander Sergeyevich Pushkin"), 1831),
+            Book("Snail on the Slope", listOf("Arkady Natanovich Strugatsky", "Boris Natanovich Strugatsky"), 1965),
+            Book("The Young Peasant Woman", listOf("Alexander Sergeyevich Pushkin"), 1831)
+        )
+        assertEquals(listOf(snailOnTheSlope), findTheYoungestBooks(bookListWithThreeStroke))
     }
 
     @Test
