@@ -51,6 +51,8 @@ internal class MainKtTest {
 
     @Test
     fun findTheOldestBooks() {
+        assertEquals(null, findTheOldestBooks(emptyList<Book>()))
+
         val bookListWithOneStroke = listOf(
             Book(
                 "Snail on the Slope",
@@ -79,6 +81,8 @@ internal class MainKtTest {
 
     @Test
     fun findTheYoungestBooks() {
+        assertEquals(null, findTheYoungestBooks(emptyList<Book>()))
+
         val bookListWithOneStroke = listOf(
             Book(
                 "Snail on the Slope",
@@ -107,6 +111,8 @@ internal class MainKtTest {
 
     @Test
     fun findTheBooksWithTheLongestTitle() {
+        assertEquals(null, findTheBooksWithTheLongestTitle(emptyList<Book>()))
+
         val bookListWithOneStroke = listOf(
             Book(
                 "Snail on the Slope",
@@ -134,6 +140,8 @@ internal class MainKtTest {
 
     @Test
     fun findTheBooksWithTheShortestTitle() {
+        assertEquals(null, findTheBooksWithTheShortestTitle(emptyList<Book>()))
+
         val bookListWithOneStroke = listOf(
             Book(
                 "Snail on the Slope",

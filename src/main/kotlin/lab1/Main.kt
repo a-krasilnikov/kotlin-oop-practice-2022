@@ -28,31 +28,32 @@ fun parseBooks(books: String): List<Book> {
     return booksList
 }
 
-fun findTheOldestBooks(bookList: List<Book>): List<Book> {
-    if (bookList.isEmpty()) error("book list shouldn't be empty")
+fun findTheOldestBooks(bookList: List<Book>): List<Book>? {
+    if (bookList.isEmpty()) return null
     val minYear = bookList.minOf { it.year }
     return bookList.filter { it.year == minYear }
 }
 
-fun findTheYoungestBooks(bookList: List<Book>): List<Book> {
-    if (bookList.isEmpty()) error("book list shouldn't be empty")
+fun findTheYoungestBooks(bookList: List<Book>): List<Book>? {
+    if (bookList.isEmpty()) return null
     val maxYear = bookList.maxOf { it.year }
     return bookList.filter { it.year == maxYear }
 }
 
-fun findTheBooksWithTheLongestTitle(bookList: List<Book>): List<Book> {
-    if (bookList.isEmpty()) error("book list shouldn't be empty")
+fun findTheBooksWithTheLongestTitle(bookList: List<Book>): List<Book>? {
+    if (bookList.isEmpty()) return null
     val maxTitle = bookList.maxOf { it.title.length }
     return bookList.filter { it.title.length == maxTitle }
 }
 
-fun findTheBooksWithTheShortestTitle(bookList: List<Book>): List<Book> {
-    if (bookList.isEmpty()) error("book list shouldn't be empty")
+fun findTheBooksWithTheShortestTitle(bookList: List<Book>): List<Book>? {
+    if (bookList.isEmpty()) return null
     val minTitle = bookList.minOf { it.title.length }
     return bookList.filter { it.title.length == minTitle }
 }
 
 fun main() {
+    println(findTheBooksWithTheShortestTitle(emptyList<Book>()))
     val strokeForParsing = "1. Eugene Onegin // Alexander Sergeyevich Pushkin // 1831\n" +
             "2. Snail on the Slope // Arkady Natanovich Strugatsky, Boris Natanovich Strugatsky // 1965\n" +
             "3. The Young Peasant Woman // Alexander Sergeyevich Pushkin // 1831\n"
