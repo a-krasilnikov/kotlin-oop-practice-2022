@@ -15,22 +15,22 @@ fun main() {
     )
 
     println(
-        "The oldest books in the list:\n" +
+        "The oldest books:\n" +
                 "${findTheOldestBooks(bookList)}\n"
     )
 
     println(
-        "The youngest books in the list:\n" +
+        "The youngest books:\n" +
                 "${findTheYoungestBooks(bookList)}\n"
     )
 
     println(
-        "The books with the longest titles in the list:\n" +
+        "The books with the longest titles:\n" +
                 "${findTheBooksWithTheLongestTitle(bookList)}\n"
     )
 
     println(
-        "The books with the shortest titles in the list:\n" +
+        "The books with the shortest titles:\n" +
                 "${findTheBooksWithTheShortestTitle(bookList)}\n"
     )
 }
