@@ -14,12 +14,6 @@ class ShapeCollector(_shapeList: List<ColoredShape2d>) {
         shapeList.add(shape)
     }
 
-    fun findTheOldestBooks(bookList: List<Book>): List<Book>? {
-        if (bookList.isEmpty()) return null
-        val minYear = bookList.minOf { it.year }
-        return bookList.filter { it.year == minYear }
-    }
-
     fun minAreaFilter(): List<ColoredShape2d>? {
         if (shapeList.isEmpty()) return null
         val minArea = shapeList.minOf { it.area }
