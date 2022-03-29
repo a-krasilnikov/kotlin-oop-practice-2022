@@ -1,6 +1,5 @@
 package lab2
 
-import lab1.Book
 import lab2.shapesInterface.ColoredShape2d
 
 class ShapeCollector(_shapeList: List<ColoredShape2d>) {
@@ -14,14 +13,14 @@ class ShapeCollector(_shapeList: List<ColoredShape2d>) {
         shapeList.add(shape)
     }
 
-    fun minAreaFilter(): List<ColoredShape2d>? {
-        if (shapeList.isEmpty()) return null
+    fun minAreaFilter(): List<ColoredShape2d> {
+        if (shapeList.isEmpty()) return emptyList()
         val minArea = shapeList.minOf { it.area }
         return shapeList.filter { it.area == minArea }
     }
 
-    fun maxAreaFilter(): List<ColoredShape2d>? {
-        if (shapeList.isEmpty()) return null
+    fun maxAreaFilter(): List<ColoredShape2d> {
+        if (shapeList.isEmpty()) return emptyList()
         val maxArea = shapeList.maxOf { it.area }
         return shapeList.filter { it.area == maxArea }
     }

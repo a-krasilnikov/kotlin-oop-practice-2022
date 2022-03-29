@@ -28,6 +28,7 @@ fun parseBooks(books: String): List<Book> {
     return booksList
 }
 
+//mb emptyList instead of null (+Tests)
 fun findTheOldestBooks(bookList: List<Book>): List<Book>? {
     if (bookList.isEmpty()) return null
     val minYear = bookList.minOf { it.year }

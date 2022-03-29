@@ -14,10 +14,10 @@ fun main() {
 
     val circle1 = Circle(1.0, color1, color2)
     val circle2 = Circle(2.0, color1, color3)
-    val rectangle = Rectangle(4.0, 5.0, color2, color1)
-    val square1 = Square(6.0, color2, color3)
-    val square2 = Square(7.0, color3, color1)
-    val triangle = Triangle(8.0, 9.0, 10.0, color3, color1)
+    val triangle = Triangle(3.0, 4.0, 5.0, color2, color1)
+    val rectangle = Rectangle(6.0, 7.0, color2, color3)
+    val square1 = Square(8.0, color3, color1)
+    val square2 = Square(9.0, color3, color2)
 
     val shapeCollection = ShapeCollector(listOf(circle1, rectangle, square1, triangle))
     println("ShapeCollection: ${shapeCollection.getShapeList()}")

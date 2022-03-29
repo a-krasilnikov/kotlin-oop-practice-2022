@@ -3,7 +3,7 @@ package lab1
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
-internal class MainKtTest {
+internal class BookListUtilsTest {
     private val eugeneOnegin = Book("Eugene Onegin", listOf("Alexander Sergeyevich Pushkin"), 1831)
     private val snailOnTheSlope = Book(
         "Snail on the Slope",
