@@ -1,5 +1,6 @@
 package lab2
 
+import lab2.shapeCollector.ShapeCollector
 import lab2.shapes.Circle
 import lab2.shapes.Rectangle
 import lab2.shapes.Square
