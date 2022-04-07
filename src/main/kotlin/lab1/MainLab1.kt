@@ -11,7 +11,10 @@ fun main() {
         3. 111111,  Санкт-Петергбург, ул. Конева, д. 55""".trimIndent()
 
     println(parserAddresses(listOfAddresses))
-
+    println(maxIndexInAddresses(parserAddresses(listOfAddresses)))
+    println(minIndexInAddresses(parserAddresses(listOfAddresses)))
+    println(maxStreetInAddresses(parserAddresses(listOfAddresses)))
+    println(minStreetInAddresses(parserAddresses(listOfAddresses)))
 
 }
 

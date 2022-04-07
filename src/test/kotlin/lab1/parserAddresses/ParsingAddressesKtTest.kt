@@ -15,18 +15,18 @@ internal class ParsingAddressesKtTest {
         2. 998998, Киров, ул. Зеленая, д. 45
         3. 111111, Санкт-Петергбург, ул. Конева, д. 55""".trimIndent()
 
-        val sourceList : List<addressBlocks> = parserAddresses(listOfAddresses)
+        val sourceList : List<AddressesBlocks> = parserAddresses(listOfAddresses)
 
-        val correctListOfItems : List<addressBlocks> = listOf(
-            addressBlocks(999999, "Москва", "Ленина", 35),
-            addressBlocks(998998, "Киров", "Зеленая", 45),
-            addressBlocks(111111, "Санкт-Петергбург", "Конева", 55)
+        val correctListOfItems : List<AddressesBlocks> = listOf(
+            AddressesBlocks(999999, "Москва", "Ленина", 35),
+            AddressesBlocks(998998, "Киров", "Зеленая", 45),
+            AddressesBlocks(111111, "Санкт-Петергбург", "Конева", 55)
         )
 
-        val notCorrectListOfItems : List<addressBlocks> = listOf(
-            addressBlocks(91119, "Москва", "Ленина", 35),
-            addressBlocks(995698, "Киров", "Зеленая", 45),
-            addressBlocks(115511, "Санкт-Петергбург", "Конева", 389)
+        val notCorrectListOfItems : List<AddressesBlocks> = listOf(
+            AddressesBlocks(91119, "Москва", "Ленина", 35),
+            AddressesBlocks(995698, "Киров", "Зеленая", 45),
+            AddressesBlocks(115511, "Санкт-Петергбург", "Конева", 389)
         )
 
         assertNotNull(sourceList)
@@ -35,77 +35,62 @@ internal class ParsingAddressesKtTest {
 
 
 
-        @Test
-        fun maxMinIndex() {
 
-            val listOfAddresses = """
-        1. 999999, Москва, ул. Ленина, д. 35
-        2. 998998, Киров, ул. Зеленая, д. 45
-        3. 111111, Санкт-Петергбург, ул. Конева, д. 55""".trimIndent()
-
-            val sourceList : List<addressBlocks> = parserAddresses(listOfAddresses)
-
-            assertNotEquals(maxInd, 999899)
-            assertEquals(maxInd, 999999)
-            assertEquals(minInd, 111111)
-            assertNotEquals(minInd, 999899)
-
-        }
-
-        fun maxMinStreet() {
-
-            val listOfAddresses = """
-        1. 999999, Москва, ул. Ленина, д. 35
-        2. 998998, Киров, ул. Зеленая, д. 45
-        3. 111111, Санкт-Петергбург, ул. Конева, д. 55""".trimIndent()
-
-            val sourceList : List<addressBlocks> = parserAddresses(listOfAddresses)
-
-            assertNotEquals(minStreet, 999899)
-            assertEquals(minStreet, 6)
-            assertEquals(maxStreet, 7)
-            assertNotEquals(maxStreet, 999899)
-
-        }
 
 
     }
 
-
     @Test
-    fun maxMinIndex() {
-
-
+    fun maxIndexInAddresses(){
         val listOfAddresses = """
         1. 999999, Москва, ул. Ленина, д. 35
         2. 998998, Киров, ул. Зеленая, д. 45
         3. 111111, Санкт-Петергбург, ул. Конева, д. 55""".trimIndent()
 
-        val sourceList : List<addressBlocks> = parserAddresses(listOfAddresses)
 
-        assertNotEquals(maxInd, 999899)
-        assertEquals(maxInd, 999999)
-        assertEquals(minInd, 111111)
-        assertNotEquals(minInd, 999899)
+        val addressesWithMaxIndex=AddressesBlocks(999999, "Москва", "Ленина", 35)
+        assertEquals(addressesWithMaxIndex, maxIndexInAddresses(parserAddresses(listOfAddresses)))
 
     }
-
-
     @Test
-    fun minMaxStreet() {
-
+    fun minIndexInAddresses(){
         val listOfAddresses = """
         1. 999999, Москва, ул. Ленина, д. 35
         2. 998998, Киров, ул. Зеленая, д. 45
         3. 111111, Санкт-Петергбург, ул. Конева, д. 55""".trimIndent()
 
-        val sourceList : List<addressBlocks> = parserAddresses(listOfAddresses)
 
-        assertNotEquals(minStreet, 999899)
-        assertEquals(minStreet, 6)
-        assertEquals(maxStreet, 7)
-        assertNotEquals(maxStreet, 999899)
+        val addressesWithMinIndex=AddressesBlocks(111111, "Санкт-Петергбург", "Конева", 55)
+        assertEquals(addressesWithMinIndex, minIndexInAddresses(parserAddresses(listOfAddresses)))
+
     }
+
+    @Test
+    fun maxStreetInAddresses(){
+        val listOfAddresses = """
+        1. 999999, Москва, ул. Рима, д. 35
+        2. 998998, Киров, ул. Зеленая, д. 45
+        3. 111111, Санкт-Петергбург, ул. Конева, д. 55""".trimIndent()
+
+
+        val addressesWithMaxStreet=AddressesBlocks(998998, "Киров", "Зеленая", 45)
+        assertEquals(addressesWithMaxStreet, maxStreetInAddresses(parserAddresses(listOfAddresses)))
+
+    }
+
+    @Test
+    fun minStreetInAddresses(){
+        val listOfAddresses = """
+        1. 999999, Москва, ул. Ленина, д. 35
+        2. 998998, Киров, ул. Зеленая, д. 45
+        3. 111111, Санкт-Петергбург, ул. Кот, д. 55""".trimIndent()
+
+        
+        val addressesWithMinStreet=AddressesBlocks(111111, "Санкт-Петергбург", "Кот", 55)
+        assertEquals(addressesWithMinStreet, minStreetInAddresses(parserAddresses(listOfAddresses)))
+
+    }
+
 
 
 }
