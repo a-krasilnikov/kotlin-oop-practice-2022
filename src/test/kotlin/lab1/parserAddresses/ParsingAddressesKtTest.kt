@@ -85,7 +85,7 @@ internal class ParsingAddressesKtTest {
         2. 998998, Киров, ул. Зеленая, д. 45
         3. 111111, Санкт-Петергбург, ул. Кот, д. 55""".trimIndent()
 
-        
+
         val addressesWithMinStreet=AddressesBlocks(111111, "Санкт-Петергбург", "Кот", 55)
         assertEquals(addressesWithMinStreet, minStreetInAddresses(parserAddresses(listOfAddresses)))
 
