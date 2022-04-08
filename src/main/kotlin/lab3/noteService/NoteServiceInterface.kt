@@ -3,12 +3,12 @@ package lab3.noteService
 import lab3.note.Note
 import java.net.URL
 import java.sql.Date
+import java.time.LocalDateTime
 
 interface NoteServiceInterface {
     val noteList: List<Note>
 
     fun add(note: Note)
-    fun add(list: List<Note>)
 
     fun getAllNotes(): List<Note>
     fun getAllTextNotes(): List<Note.TextNote>
@@ -17,7 +17,7 @@ interface NoteServiceInterface {
 
     fun createTextNote(title: String, content: String): Note.TextNote
 
-    fun createTask(title: String, content: String, task: String, deadline: Date): Note.Task
+    fun createTask(title: String, task: String, deadline: LocalDateTime): Note.Task
 
     fun createLink(title: String, content: String, url: URL): Note.Link
 

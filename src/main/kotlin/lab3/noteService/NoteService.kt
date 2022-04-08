@@ -3,8 +3,8 @@ package lab3.noteService
 import lab3.note.Note
 import lab3.note.Note.*
 import java.net.URL
-import java.sql.Date
 import java.time.LocalDateTime
+import java.util.logging.Logger
 
 class NoteService() : NoteServiceInterface {
     override val noteList
@@ -17,8 +17,32 @@ class NoteService() : NoteServiceInterface {
         _noteMutableList.add(note)
     }
 
-    override fun add(list: List<Note>) {
+    fun add(list: List<Note>) {
         _noteMutableList.addAll(list)
+    }
+
+    fun add(title: String, content: String) {
+        add(createTextNote(title, content))
+    }
+
+    fun add(title: String, task: String, deadline: LocalDateTime) {
+        add(createTask(title, task, deadline))
+    }
+
+    fun add(title: String, content: String, url: URL) {
+        add(createLink(title, content, url))
+    }
+
+    fun addTextNotes(title: String, content: String) {
+        add(createTextNote(title, content))
+    }
+
+    fun addTask(title: String, task: String, deadline: LocalDateTime) {
+        add(createTask(title, task, deadline))
+    }
+
+    fun addLink(title: String, content: String, url: URL) {
+        add(createLink(title, content, url))
     }
 
     override fun getAllNotes(): List<Note> = noteList
@@ -32,8 +56,8 @@ class NoteService() : NoteServiceInterface {
     override fun createTextNote(title: String, content: String): TextNote =
         TextNote(title, content, LocalDateTime.now())
 
-    override fun createTask(title: String, content: String, task: String, deadline: Date): Task =
-        Task(title, content, LocalDateTime.now(), task, deadline)
+    override fun createTask(title: String, task: String, deadline: LocalDateTime): Task =
+        Task(title, task, deadline, LocalDateTime.now())
 
     override fun createLink(title: String, content: String, url: URL): Link =
         Link(title, content, LocalDateTime.now(), url)
