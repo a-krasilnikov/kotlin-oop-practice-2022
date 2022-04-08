@@ -2,7 +2,6 @@ package lab3.noteService
 
 import lab3.note.Note
 import java.net.URL
-import java.sql.Date
 import java.time.LocalDateTime
 
 interface NoteServiceInterface {

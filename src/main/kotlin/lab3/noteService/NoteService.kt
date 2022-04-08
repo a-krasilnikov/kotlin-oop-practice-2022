@@ -4,7 +4,6 @@ import lab3.note.Note
 import lab3.note.Note.*
 import java.net.URL
 import java.time.LocalDateTime
-import java.util.logging.Logger
 
 class NoteService() : NoteServiceInterface {
     override val noteList
