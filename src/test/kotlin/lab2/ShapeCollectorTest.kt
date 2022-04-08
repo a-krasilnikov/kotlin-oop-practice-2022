@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Assertions.*
 
 internal class ShapeCollectorTest {
     private val color1 = ColorRGBA(1.0, 1.0, 1.0, 1.0)
-    private val color2 = ColorRGBA(2.0, 2.0, 2.0, 2.0)
-    private val color3 = ColorRGBA(3.0, 3.0, 3.0, 3.0)
+    private val color2 = ColorRGBA(2.0, 2.0, 2.0, 0.5)
+    private val color3 = ColorRGBA(3.0, 3.0, 3.0, 0.0)
 
     private val circle1 = Circle(1.0, color1, color2)
     private val circle2 = Circle(2.0, color1, color3)

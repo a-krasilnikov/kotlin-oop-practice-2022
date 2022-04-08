@@ -15,8 +15,8 @@ class Circle(_radius: Double, _borderColorRGBA: ColorRGBA, _fillColorRGBA: Color
             throw IllegalArgumentException("Radius should be positive")
         radius = _radius
 
-        borderColorRGBA = _borderColorRGBA.copy()
-        fillColorRGBA = _fillColorRGBA.copy()
+        borderColorRGBA = _borderColorRGBA
+        fillColorRGBA = _fillColorRGBA
     }
 
     override fun toString(): String {

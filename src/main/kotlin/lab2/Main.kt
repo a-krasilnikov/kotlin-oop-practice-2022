@@ -10,8 +10,8 @@ import lab2.shapes.Triangle
 
 fun main() {
     val color1 = ColorRGBA(1.0, 1.0, 1.0, 1.0)
-    val color2 = ColorRGBA(2.0, 2.0, 2.0, 2.0)
-    val color3 = ColorRGBA(3.0, 3.0, 3.0, 3.0)
+    val color2 = ColorRGBA(2.0, 2.0, 2.0, 0.5)
+    val color3 = ColorRGBA(3.0, 3.0, 3.0, 0.0)
 
     val circle1 = Circle(1.0, color1, color2)
     val circle2 = Circle(2.0, color1, color3)
