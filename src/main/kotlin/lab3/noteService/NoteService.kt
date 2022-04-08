@@ -4,6 +4,9 @@ import lab3.note.Note
 import lab3.note.Note.*
 import java.net.URL
 import java.time.LocalDateTime
+import java.util.logging.Logger
+
+val LOG: Logger = Logger.getLogger(NoteService()::class.java.name)
 
 class NoteService() : NoteServiceInterface {
     override val noteList
@@ -14,34 +17,42 @@ class NoteService() : NoteServiceInterface {
 
     override fun add(note: Note) {
         _noteMutableList.add(note)
+        LOG.info("new note has been added")
     }
 
     fun add(list: List<Note>) {
         _noteMutableList.addAll(list)
+        LOG.info("new note has been added")
     }
 
     fun add(title: String, content: String) {
         add(createTextNote(title, content))
+        LOG.info("new note has been added")
     }
 
     fun add(title: String, task: String, deadline: LocalDateTime) {
         add(createTask(title, task, deadline))
+        LOG.info("new note has been added")
     }
 
     fun add(title: String, content: String, url: URL) {
         add(createLink(title, content, url))
+        LOG.info("new note has been added")
     }
 
     fun addTextNotes(title: String, content: String) {
         add(createTextNote(title, content))
+        LOG.info("new note has been added")
     }
 
     fun addTask(title: String, task: String, deadline: LocalDateTime) {
         add(createTask(title, task, deadline))
+        LOG.info("new note has been added")
     }
 
     fun addLink(title: String, content: String, url: URL) {
         add(createLink(title, content, url))
+        LOG.info("new note has been added")
     }
 
     override fun getAllNotes(): List<Note> = noteList
@@ -64,6 +75,7 @@ class NoteService() : NoteServiceInterface {
 
     override fun removeNote(note: Note) {
         _noteMutableList.remove(note)
+        LOG.info("note has been removed")
     }
 
     override fun findByTitle(title: String): List<Note> = _noteMutableList.filter { it.title == title }
