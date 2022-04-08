@@ -29,8 +29,8 @@ class Triangle(_a: Double, _b: Double, _c: Double, _borderColorRGBA: ColorRGBA, 
         b = _b
         c = _c
 
-        borderColorRGBA = _borderColorRGBA
-        fillColorRGBA = _fillColorRGBA
+        borderColorRGBA = _borderColorRGBA.copy()
+        fillColorRGBA = _fillColorRGBA.copy()
     }
 
     override fun toString(): String {

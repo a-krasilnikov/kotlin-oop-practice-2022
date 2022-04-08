@@ -15,8 +15,8 @@ class Square(_a: Double, _borderColorRGBA: ColorRGBA, _fillColorRGBA: ColorRGBA)
             throw IllegalArgumentException("Size of the sides should be positive")
         a = _a
 
-        borderColorRGBA = _borderColorRGBA
-        fillColorRGBA = _fillColorRGBA
+        borderColorRGBA = _borderColorRGBA.copy()
+        fillColorRGBA = _fillColorRGBA.copy()
     }
 
     override fun toString(): String {

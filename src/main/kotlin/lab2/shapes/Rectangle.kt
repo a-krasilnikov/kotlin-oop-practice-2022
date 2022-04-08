@@ -17,8 +17,8 @@ class Rectangle(_a: Double, _b: Double, _borderColorRGBA: ColorRGBA, _fillColorR
         a = _a
         b = _b
 
-        borderColorRGBA = _borderColorRGBA
-        fillColorRGBA = _fillColorRGBA
+        borderColorRGBA = _borderColorRGBA.copy()
+        fillColorRGBA = _fillColorRGBA.copy()
 
     }
 
