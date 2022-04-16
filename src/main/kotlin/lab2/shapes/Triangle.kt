@@ -26,8 +26,8 @@ class Triangle(
         if (a <= 0 || b <= 0 || c <= 0)
             throw IllegalArgumentException("Size of the sides should be positive")
 
-        if (a + b >= c || a + c >= b || b + c >= a)
-            throw IllegalArgumentException("Sum of two sides should be less than third side")
+        if (a + b <= c || a + c <= b || b + c <= a)
+            throw IllegalArgumentException("Sum of two sides should be greater than third side")
     }
 
     override fun toString(): String {

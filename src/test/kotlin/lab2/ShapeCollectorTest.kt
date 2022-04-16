@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.*
 
 internal class ShapeCollectorTest {
-    private val color1 = ColorRGBA(1.0, 1.0, 1.0, 1.0)
-    private val color2 = ColorRGBA(2.0, 2.0, 2.0, 0.5)
-    private val color3 = ColorRGBA(3.0, 3.0, 3.0, 0.0)
+    private val color1 = ColorRGBA(1, 1, 1, 1.0)
+    private val color2 = ColorRGBA(2, 2, 2, 0.5)
+    private val color3 = ColorRGBA(3, 3, 3, 0.0)
 
     private val circle1 = Circle(1.0, color1, color2)
     private val circle2 = Circle(2.0, color1, color3)
@@ -79,7 +79,7 @@ internal class ShapeCollectorTest {
 
     @Test
     fun fillColorRGBAFilter() {
-        assertEquals(listOf( square1, triangle), fullShapeCollection.fillColorRGBAFilter(color1))
+        assertEquals(listOf(square1, triangle), fullShapeCollection.fillColorRGBAFilter(color1))
         assertEquals(listOf(circle1, square2), fullShapeCollection.fillColorRGBAFilter(color2))
         assertEquals(listOf(rectangle, circle2), fullShapeCollection.fillColorRGBAFilter(color3))
 
@@ -95,21 +95,21 @@ internal class ShapeCollectorTest {
 
     @Test
     fun groupByBorderColorRGBA() {
-        fullShapeCollection.groupByBorderColorRGBA().forEach{
+        fullShapeCollection.groupByBorderColorRGBA().forEach {
             assertEquals(it.key, it.value[0].borderColorRGBA)
         }
     }
 
     @Test
     fun groupByFillColorRGBA() {
-        fullShapeCollection.groupByFillColorRGBA().forEach{
+        fullShapeCollection.groupByFillColorRGBA().forEach {
             assertEquals(it.key, it.value[0].fillColorRGBA)
         }
     }
 
     @Test
     fun groupByType() {
-        fullShapeCollection.groupByType().forEach{
+        fullShapeCollection.groupByType().forEach {
             assertEquals(it.key, it.value[0].javaClass)
         }
     }
