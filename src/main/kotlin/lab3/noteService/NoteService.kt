@@ -17,42 +17,6 @@ class NoteService() : NoteServiceInterface {
 
     override fun add(note: Note) {
         _noteMutableList.add(note)
-        LOG.info("new note has been added")
-    }
-
-    fun add(list: List<Note>) {
-        _noteMutableList.addAll(list)
-        LOG.info("new note has been added")
-    }
-
-    fun add(title: String, content: String) {
-        add(createTextNote(title, content))
-        LOG.info("new note has been added")
-    }
-
-    fun add(title: String, task: String, deadline: LocalDateTime) {
-        add(createTask(title, task, deadline))
-        LOG.info("new note has been added")
-    }
-
-    fun add(title: String, content: String, url: URL) {
-        add(createLink(title, content, url))
-        LOG.info("new note has been added")
-    }
-
-    fun addTextNotes(title: String, content: String) {
-        add(createTextNote(title, content))
-        LOG.info("new note has been added")
-    }
-
-    fun addTask(title: String, task: String, deadline: LocalDateTime) {
-        add(createTask(title, task, deadline))
-        LOG.info("new note has been added")
-    }
-
-    fun addLink(title: String, content: String, url: URL) {
-        add(createLink(title, content, url))
-        LOG.info("new note has been added")
     }
 
     override fun getAllNotes(): List<Note> = noteList
@@ -63,19 +27,25 @@ class NoteService() : NoteServiceInterface {
     override fun getAllLinks(): List<Link> = _noteMutableList.filterIsInstance<Link>()
 
 
-    override fun createTextNote(title: String, content: String): TextNote =
-        TextNote(title, content, LocalDateTime.now())
+    override fun createTextNote(title: String, content: String): TextNote {
+        LOG.info("new text note has been added")
+        return TextNote(title, content, LocalDateTime.now())
+    }
 
-    override fun createTask(title: String, task: String, deadline: LocalDateTime): Task =
-        Task(title, task, deadline, LocalDateTime.now())
+    override fun createTask(title: String, task: String, deadline: LocalDateTime): Task {
+        LOG.info("new task note has been added")
+        return Task(title, task, deadline, LocalDateTime.now())
+    }
 
-    override fun createLink(title: String, content: String, url: URL): Link =
-        Link(title, content, LocalDateTime.now(), url)
+    override fun createLink(title: String, content: String, url: URL): Link {
+        LOG.info("new link note has been added")
+        return Link(title, content, LocalDateTime.now(), url)
+    }
 
 
     override fun removeNote(note: Note) {
-        _noteMutableList.remove(note)
-        LOG.info("note has been removed")
+        if (_noteMutableList.remove(note))
+            LOG.info("note has been removed")
     }
 
     override fun findByTitle(title: String): List<Note> = _noteMutableList.filter { it.title == title }

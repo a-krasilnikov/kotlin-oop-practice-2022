@@ -37,5 +37,25 @@ sealed class Note(var title: String?, var content: String?, val date: LocalDateT
         }
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Note
+
+        if (title != other.title) return false
+        if (content != other.content) return false
+        if (date != other.date) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = title?.hashCode() ?: 0
+        result = 31 * result + (content?.hashCode() ?: 0)
+        result = 31 * result + date.hashCode()
+        return result
+    }
+
 
 }
