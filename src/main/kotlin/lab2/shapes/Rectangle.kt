@@ -4,8 +4,8 @@ import lab2.ColorRGBA
 import lab2.shapesInterface.ColoredShape2d
 
 class Rectangle(
-    private val a: Double,
-    private val b: Double,
+    val a: Double,
+    val b: Double,
     override val borderColorRGBA: ColorRGBA,
     override val fillColorRGBA: ColorRGBA
 ) : ColoredShape2d {

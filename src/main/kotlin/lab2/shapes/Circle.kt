@@ -4,7 +4,7 @@ import lab2.ColorRGBA
 import lab2.shapesInterface.ColoredShape2d
 
 class Circle(
-    private val radius: Double,
+    val radius: Double,
     override val borderColorRGBA: ColorRGBA,
     override val fillColorRGBA: ColorRGBA
 ) : ColoredShape2d {

@@ -3,7 +3,7 @@ package lab2.shapes
 import lab2.ColorRGBA
 import lab2.shapesInterface.ColoredShape2d
 
-class Square(private val a: Double, override val borderColorRGBA: ColorRGBA, override val fillColorRGBA: ColorRGBA) :
+class Square(val a: Double, override val borderColorRGBA: ColorRGBA, override val fillColorRGBA: ColorRGBA) :
     ColoredShape2d {
 
     override val area: Double

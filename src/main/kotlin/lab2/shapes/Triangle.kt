@@ -5,9 +5,9 @@ import lab2.shapesInterface.ColoredShape2d
 import kotlin.math.sqrt
 
 class Triangle(
-    private val a: Double,
-    private val b: Double,
-    private val c: Double,
+    val a: Double,
+    val b: Double,
+    val c: Double,
     override val borderColorRGBA: ColorRGBA,
     override val fillColorRGBA: ColorRGBA
 ) :
