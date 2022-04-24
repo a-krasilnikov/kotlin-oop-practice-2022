@@ -8,7 +8,6 @@ import lab6.shapes.Rectangle
 import lab6.shapes.Square
 import lab6.shapes.Triangle
 import lab6.serializationUtil.ShapeCollectorSerializationUtil
-import lab6.serializationUtil.ShapeSerializationUtil
 
 
 fun main() {
@@ -29,7 +28,7 @@ fun main() {
     ShapeCollectorSerializationUtil.serializationToFile(shapeCollection, "file1.txt")
 
     //read shapeCollection from the file1.txt
-    shapeCollection  = ShapeCollectorSerializationUtil.deserializationFromFile("file1.txt")
+    shapeCollection = ShapeCollectorSerializationUtil.deserializationFromFile("file1.txt")
 
 
     //add new shapes to the shapeCollection
