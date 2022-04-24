@@ -7,11 +7,6 @@ import lab6.shapes.Circle
 import lab6.shapes.Rectangle
 import lab6.shapes.Square
 import lab6.shapes.Triangle
-import lab6.shapesInterface.ColoredShape2d
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.*
 import lab6.serializationUtil.ShapeCollectorSerializationUtil
 import lab6.serializationUtil.ShapeSerializationUtil
 
@@ -28,26 +23,19 @@ fun main() {
     val square1 = Square(8.0, color3, color1)
     val square2 = Square(9.0, color3, color2)
 
-    val shapeCollection = ShapeCollector(listOf(circle1, rectangle, square1, triangle))
+    var shapeCollection = ShapeCollector(listOf(circle1, rectangle, square1, triangle))
 
-    val json = Json {
-        prettyPrint = true
-        serializersModule = SerializersModule {
-            polymorphic(ColoredShape2d::class) {
-                subclass(Circle::class)
-                subclass(Rectangle::class)
-                subclass(Square::class)
-                subclass(Triangle::class)
-            }
+    //write shapeCollection to the file1.txt
+    ShapeCollectorSerializationUtil.serializationToFile(shapeCollection, "file1.txt")
 
-        }
-    }
+    //read shapeCollection from the file1.txt
+    shapeCollection  = ShapeCollectorSerializationUtil.deserializationFromFile("file1.txt")
 
-    val shapeCollectionJson = ShapeCollectorSerializationUtil.serialization(shapeCollection)
-    println(shapeCollectionJson)
 
-    val shapeJson = ShapeSerializationUtil.serialization(triangle)
-    println(shapeJson)
+    //add new shapes to the shapeCollection
+    shapeCollection.add(circle2)
+    shapeCollection.add(square2)
 
-    println(ShapeSerializationUtil.deserialization(shapeJson))
+    //write shapeCollection to the file2.txt
+    ShapeCollectorSerializationUtil.serializationToFile(shapeCollection, "file2.txt")
 }
