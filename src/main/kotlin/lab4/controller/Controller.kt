@@ -9,7 +9,8 @@ class Controller(private val maze: Maze) {
     }
 
     private fun startGame() {
-        while (!maze.isWin) {
+        var isExit = false
+        while (!maze.isWin && !isExit) {
             val input = readln()
             for (i in input.indices) {
                 try {
@@ -18,6 +19,13 @@ class Controller(private val maze: Maze) {
                         's' -> maze.doMove(Direction.DOWN)
                         'd' -> maze.doMove(Direction.RIGHT)
                         'a' -> maze.doMove(Direction.LEFT)
+                        'e' -> {
+                            println("Get the FileName...")
+                            val fileName = readln()
+                            maze.writeMazeToFile(fileName)
+                            isExit = true
+                            break
+                        }
                         else -> throw IllegalArgumentException("Incorrect direction")
                     }
 

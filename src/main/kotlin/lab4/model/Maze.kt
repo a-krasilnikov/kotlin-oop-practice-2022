@@ -14,14 +14,12 @@ enum class Direction {
 }
 
 @Serializable
-class Maze(val mazeData: MutableList<MutableList<Cell>>) {
+class Maze(private val mazeData: MutableList<MutableList<Cell>>) {
     var isWin: Boolean
 
-    var currI: Int
-        private set
+    private var currI: Int
 
-    var currJ: Int
-        private set
+    private var currJ: Int
 
     init {
         currI = -1
@@ -75,10 +73,8 @@ class Maze(val mazeData: MutableList<MutableList<Cell>>) {
         MazeSerializationUtils.serializationToFile(mazeData, fileName)
     }
 
-    fun copy() = Maze(mazeData.toMutableList())
-
     private fun isCellEmpty(i: Int, j: Int) =
-        i >= 0 && j >= 0 && i < mazeData.size && j < mazeData[0].size && (mazeData[i][j] == Maze.Cell.EMPTY || mazeData[i][j] == Maze.Cell.FINISH)
+        i >= 0 && j >= 0 && i < mazeData.size && j < mazeData[0].size && (mazeData[i][j] == Cell.EMPTY || mazeData[i][j] == Cell.FINISH)
 
     private fun moveThePlayer(i: Int, j: Int) {
         if (isCellEmpty(i, j)) {
@@ -114,9 +110,8 @@ class Maze(val mazeData: MutableList<MutableList<Cell>>) {
                 }
                 append('|').appendLine()
             }
-            mazeData[0].forEach {
+            for (i in 0 until mazeData[0].size)
                 append("‾ ")
-            }
         }
     }
 
