@@ -49,4 +49,21 @@ class ShapeCollector(private var _shapeList: List<ColoredShape2d>) : ShapeCollec
     override fun groupByFillColorRGBA(): Map<ColorRGBA, List<ColoredShape2d>> = shapeList.groupBy { it.fillColorRGBA }
 
     override fun groupByType(): Map<Class<Any>, List<ColoredShape2d>> = shapeList.groupBy { it.javaClass }
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ShapeCollector
+
+        if (_shapeList != other._shapeList) return false
+        if (shapeList != other.shapeList) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = _shapeList.hashCode()
+        result = 31 * result + shapeList.hashCode()
+        return result
+    }
 }

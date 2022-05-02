@@ -15,7 +15,7 @@ import lab6.shapesInterface.ColoredShape2d
 import java.io.File
 
 object ShapeCollectorSerializationUtil {
-    private val json = Json {
+    public val json = Json {
         serializersModule = SerializersModule {
             polymorphic(ColoredShape2d::class) {
                 subclass(Circle::class)

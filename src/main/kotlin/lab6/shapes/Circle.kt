@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class Circle(
-    val radius: Double,
+    public val radius: Double,
     override val borderColorRGBA: ColorRGBA,
     override val fillColorRGBA: ColorRGBA
 ) : ColoredShape2d {
@@ -23,5 +23,25 @@ class Circle(
                 "\tradius: $radius\n" +
                 "\tborderColorRGBA: $borderColorRGBA\n" +
                 "\tfillColorRGBA: $fillColorRGBA)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Circle
+
+        if (radius != other.radius) return false
+        if (borderColorRGBA != other.borderColorRGBA) return false
+        if (fillColorRGBA != other.fillColorRGBA) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = radius.hashCode()
+        result = 31 * result + borderColorRGBA.hashCode()
+        result = 31 * result + fillColorRGBA.hashCode()
+        return result
     }
 }
