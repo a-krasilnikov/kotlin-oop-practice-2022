@@ -13,7 +13,7 @@ class view(private val model : ModelMaze) {
     }
 
     private fun repaint() {
-        Runtime.getRuntime().exec("clearing")
+        Runtime.getRuntime().exec("cmd")
         println(model)
     }
 }

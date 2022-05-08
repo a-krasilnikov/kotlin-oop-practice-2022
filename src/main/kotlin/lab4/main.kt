@@ -4,9 +4,9 @@ import java.io.File
 
 
 fun main() {
-    val newmodel = ModelMaze()
-    view(newmodel)
-    Controller(newmodel)
+    val newModel = ModelMaze()
+    view(newModel)
+    Controller(newModel)
 }
 
 
