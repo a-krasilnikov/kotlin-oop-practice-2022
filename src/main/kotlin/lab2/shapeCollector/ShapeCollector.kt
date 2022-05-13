@@ -3,24 +3,24 @@ package lab2.shapeCollector
 import lab2.ColorRGBA
 import lab2.shapesInterface.ColoredShape2d
 
-class ShapeCollector(_shapeList: List<ColoredShape2d>) :ShapeCollectorInterface{
-    private val shapeList: MutableList<ColoredShape2d>
+class ShapeCollector<out T : ColoredShape2d>(_shapeList: List<T>) : ShapeCollectorInterface<T> {
+    private val shapeList: MutableList<T>
 
     init {
         shapeList = _shapeList.toMutableList()
     }
 
-    override fun add(shape: ColoredShape2d) {
+    override fun add(shape: @UnsafeVariance T) {
         shapeList.add(shape)
     }
 
-    override fun minAreaFilter(): List<ColoredShape2d> {
+    override fun minAreaFilter(): List<T> {
         if (shapeList.isEmpty()) return emptyList()
         val minArea = shapeList.minOf { it.area }
         return shapeList.filter { it.area == minArea }
     }
 
-    override fun maxAreaFilter(): List<ColoredShape2d> {
+    override fun maxAreaFilter(): List<T> {
         if (shapeList.isEmpty()) return emptyList()
         val maxArea = shapeList.maxOf { it.area }
         return shapeList.filter { it.area == maxArea }
@@ -34,19 +34,32 @@ class ShapeCollector(_shapeList: List<ColoredShape2d>) :ShapeCollectorInterface{
         return totalArea
     }
 
-    override fun borderColorRGBAFilter(borderColorRGBA: ColorRGBA): List<ColoredShape2d> =
+    override fun borderColorRGBAFilter(borderColorRGBA: ColorRGBA): List<T> =
         shapeList.filter { it.borderColorRGBA == borderColorRGBA }
 
-    override fun fillColorRGBAFilter(fillColorRGBA: ColorRGBA): List<ColoredShape2d> =
+    override fun fillColorRGBAFilter(fillColorRGBA: ColorRGBA): List<T> =
         shapeList.filter { it.fillColorRGBA == fillColorRGBA }
 
-    override fun getShapeList(): List<ColoredShape2d> = shapeList.toList()
+    override fun getShapeList(): List<T> = shapeList.toList()
 
     override fun getShapeListSize(): Int = shapeList.size
 
-    override fun groupByBorderColorRGBA(): Map<ColorRGBA, List<ColoredShape2d>> = shapeList.groupBy { it.borderColorRGBA }
+    override fun groupByBorderColorRGBA(): Map<ColorRGBA, List<T>> =
+        shapeList.groupBy { it.borderColorRGBA }
 
-    override fun groupByFillColorRGBA(): Map<ColorRGBA, List<ColoredShape2d>> = shapeList.groupBy { it.fillColorRGBA }
+    override fun groupByFillColorRGBA(): Map<ColorRGBA, List<T>> = shapeList.groupBy { it.fillColorRGBA }
 
-    override fun groupByType(): Map<Class<Any>, List<ColoredShape2d>> = shapeList.groupBy { it.javaClass }
+    override fun groupByType(): Map<Class<Any>, List<T>> = shapeList.groupBy { it.javaClass }
+
+    fun addAll(newShapesList: List<@UnsafeVariance T>) {
+        newShapesList.forEach {
+            shapeList.add(it)
+        }
+    }
+
+    fun getSorted(shapesComparator: Comparator<@UnsafeVariance T>): List<T> {
+        val sortedShapeList = shapeList
+        sortedShapeList.sortWith(shapesComparator)
+        return sortedShapeList.toList()
+    }
 }
