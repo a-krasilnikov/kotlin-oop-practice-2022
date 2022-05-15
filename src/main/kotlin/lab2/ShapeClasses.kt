@@ -7,8 +7,8 @@ interface Shape2d {
 
 
 interface ColoredShape2d : Shape2d {
-    val borderColor : Color               //граница
-    val fillColor : Color                 //заливка
+    val borderColor : Color
+    val fillColor : Color
 }
 
 data class Color(val red : Int, val green : Int, val blue : Int, val transparency : Int) {
@@ -32,9 +32,8 @@ data class Color(val red : Int, val green : Int, val blue : Int, val transparenc
 }
 
 
-// квадрат, прямогольник, треугольник,круг)
-class Square(
-    private val side : Double,
+data class Square(
+    val side : Double,
     override val borderColor : Color,
     override val fillColor : Color,
 ) : ColoredShape2d {
@@ -42,31 +41,47 @@ class Square(
     override fun calcArea() : Double = side * side
 }
 
-class Rectangle(
-    private val height : Double,
-    private val width : Double,
+data class Rectangle(
+    val height : Double,
+    val width : Double,
     override val borderColor : Color,
     override val fillColor : Color,
 ) : ColoredShape2d {
+    init {
+        if ((height <= 0.0) || (width <= 0.0)) {
+            throw IllegalArgumentException("The value must be between 1 and +inf: ")
+        }
+    }
 
     override fun calcArea() : Double = height * width
 }
 
-class Triangle(
-    private val height : Double,
-    private val side : Double,
+data class Triangle(
+    val height : Double,
+    val side : Double,
     override val borderColor : Color,
     override val fillColor : Color,
 ) : ColoredShape2d {
+    init {
+        if ((height <= 0.0) || (side <= 0.0)) {
+            throw IllegalArgumentException("The value must be between 1 and +inf: ")
+        }
+    }
 
     override fun calcArea() : Double = height * side * 0.5
 }
 
-class Circle(
-    private val radius : Double,
+data class Circle(
+    val radius : Double,
     override val borderColor : Color,
     override val fillColor : Color,
 ) : ColoredShape2d {
+
+    init {
+        if (radius <= 0.0) {
+            throw IllegalArgumentException("The value must be between 1 and +inf: ")
+        }
+    }
 
     override fun calcArea() : Double = radius * radius * 3.14
 }

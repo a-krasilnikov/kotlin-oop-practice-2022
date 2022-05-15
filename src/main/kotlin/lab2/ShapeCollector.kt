@@ -1,14 +1,17 @@
 package lab2
 
 
-class ShapeCollector<T : ColoredShape2d> : ShapeCollectorView {
+class ShapeCollector<T : ColoredShape2d>(newList : List<T>) : ShapeCollectorView<T> {
 
 
-    private val listOfAllShape = mutableListOf<ColoredShape2d>()
+    private val listOfAllShape : MutableList<T>
 
     //http://developer.alexanderklimov.ru/android/kotlin/collection.php#filter
-    override fun addShapeToList(newShape : ColoredShape2d) {
+    override fun addShapeToList(newShape : T) {
         listOfAllShape.add(newShape)
+    }
+    override fun addAll(newShapes : List<T>) {
+        listOfAllShape += newShapes
     }
 
     override fun shapeWithMaxArea() : ColoredShape2d? = listOfAllShape.maxByOrNull { it.calcArea() }
@@ -24,7 +27,12 @@ class ShapeCollector<T : ColoredShape2d> : ShapeCollectorView {
     override fun allShapesInList() : List<ColoredShape2d> = listOfAllShape
     override fun groupByBorderColor() : Map<Color, List<ColoredShape2d>> = listOfAllShape.groupBy { it.borderColor }
     override fun groupByColorFill() : Map<Color, List<ColoredShape2d>> = listOfAllShape.groupBy { it.fillColor }
-    override fun sortByType(sort : String) : List<ColoredShape2d> = listOfAllShape.filter { it.toString() == sort }
+    override fun <T : ColoredShape2d> filterByType(shape : Class<T>) : List<ColoredShape2d> = listOfAllShape.filterIsInstance(shape)
+    override fun getSorted(comparatorForShape : Comparator<T>) = listOfAllShape.sortWith(comparatorForShape)
+
+    init {
+        listOfAllShape = newList.toMutableList()
+    }
 
 }
 
