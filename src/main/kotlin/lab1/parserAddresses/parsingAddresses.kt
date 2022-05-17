@@ -6,8 +6,6 @@ import kotlin.String
 data class AddressesBlocks(val index : Int, val town : String, val street : String, val house : Int)
 
 fun parserAddresses(listOfAddresses : String) : List<AddressesBlocks> {
-
-
     val splittingString = listOfAddresses.split("\n")//list of separated strings
     val newAddressesBlocks = mutableListOf<AddressesBlocks>()
     for (tmpStr in splittingString) {
@@ -23,32 +21,22 @@ fun parserAddresses(listOfAddresses : String) : List<AddressesBlocks> {
 
         val addressBlocks = AddressesBlocks(index.toInt(), town, street, house.toInt())
         newAddressesBlocks.add(addressBlocks)
-
     }
-
-
     return newAddressesBlocks
-
 }
 
- fun maxIndexInAddresses(newAddressesBlocks:List<AddressesBlocks>) :AddressesBlocks? {
-
+fun maxIndexInAddresses(newAddressesBlocks : List<AddressesBlocks>) : AddressesBlocks? {
     return newAddressesBlocks.maxByOrNull { it.index }//https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/max-by-or-null.html
 }
-fun minIndexInAddresses(newAddressesBlocks:List<AddressesBlocks>) :AddressesBlocks? {
 
+fun minIndexInAddresses(newAddressesBlocks : List<AddressesBlocks>) : AddressesBlocks? {
     return newAddressesBlocks.minByOrNull { it.index }
 }
 
-fun minStreetInAddresses(newAddressesBlocks:List<AddressesBlocks>) :AddressesBlocks? {
-
-    return newAddressesBlocks.minByOrNull { it.street.length}
-}
-fun maxStreetInAddresses(newAddressesBlocks:List<AddressesBlocks>) :AddressesBlocks? {
-
-    return newAddressesBlocks.maxByOrNull { it.street.length}
+fun minStreetInAddresses(newAddressesBlocks : List<AddressesBlocks>) : AddressesBlocks? {
+    return newAddressesBlocks.minByOrNull { it.street.length }
 }
 
-
-
-
+fun maxStreetInAddresses(newAddressesBlocks : List<AddressesBlocks>) : AddressesBlocks? {
+    return newAddressesBlocks.maxByOrNull { it.street.length }
+}
