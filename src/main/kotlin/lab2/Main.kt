@@ -27,8 +27,9 @@ fun main() {
     newShapes.getSorted(compareBy(ColoredShape2d::calcArea))
     println("after get sorted by area")
     println(newShapes.allShapesInList())
-
+    //newShapes.getSorted(r)
 }
+
 
 
 

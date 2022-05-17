@@ -220,7 +220,6 @@ internal class ShapeCollectorTest {
         }
 
 
-
         val newShapesOne = ShapeCollector(emptyList).also {
             it.addShapeToList(Rectangle(2.3, 5.5, Color(1, 8, 9, 78), Color(7, 5, 5, 17)))
             it.addShapeToList(Square(9.0, Color(5, 6, 3, 87), Color(81, 9, 45, 5)))

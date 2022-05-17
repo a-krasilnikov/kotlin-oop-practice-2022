@@ -37,7 +37,9 @@ data class Square(
     override val borderColor : Color,
     override val fillColor : Color,
 ) : ColoredShape2d {
-
+    if (side <= 0.0)  {
+        throw IllegalArgumentException("The value must be between 1 and +inf: ")
+    }
     override fun calcArea() : Double = side * side
 }
 

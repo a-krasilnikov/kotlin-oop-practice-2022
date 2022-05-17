@@ -1,6 +1,6 @@
 package lab4
 
-class view(private val model : ModelMaze) {
+class View(private val model : ModelMaze) {
     init {
         val listener = object : ModelChangeListener {
             override fun onModelChanged() {

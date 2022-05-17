@@ -6,10 +6,15 @@ class ShapeCollector<T : ColoredShape2d>(newList : List<T>) : ShapeCollectorView
 
     private val listOfAllShape : MutableList<T>
 
-    //http://developer.alexanderklimov.ru/android/kotlin/collection.php#filter
+    init {
+        listOfAllShape = newList.toMutableList()
+    }
+
+
     override fun addShapeToList(newShape : T) {
         listOfAllShape.add(newShape)
     }
+
     override fun addAll(newShapes : List<T>) {
         listOfAllShape += newShapes
     }
@@ -17,26 +22,23 @@ class ShapeCollector<T : ColoredShape2d>(newList : List<T>) : ShapeCollectorView
     override fun shapeWithMaxArea() : ColoredShape2d? = listOfAllShape.maxByOrNull { it.calcArea() }
     override fun shapeWithMinArea() : ColoredShape2d? = listOfAllShape.minByOrNull { it.calcArea() }
     override fun sumAreaOfAllShapes() : Double = listOfAllShape.sumOf { it.calcArea() }
-    override fun searchForAllShapesByFillColor(fillColor : Color) : List<ColoredShape2d> =
+    override fun searchForAllShapesByFillColor(fillColor : Color) : List<T> =
         listOfAllShape.filter { it.fillColor == fillColor }
 
-    override fun searchForAllShapesByBorderColor(borderColor : Color) : List<ColoredShape2d> =
+    override fun searchForAllShapesByBorderColor(borderColor : Color) : List<T> =
         listOfAllShape.filter { it.borderColor == borderColor }
 
     override fun quantityAllShapesInList() : Int = listOfAllShape.size
-    override fun allShapesInList() : List<ColoredShape2d> = listOfAllShape
-    override fun groupByBorderColor() : Map<Color, List<ColoredShape2d>> = listOfAllShape.groupBy { it.borderColor }
-    override fun groupByColorFill() : Map<Color, List<ColoredShape2d>> = listOfAllShape.groupBy { it.fillColor }
-    override fun <T : ColoredShape2d> filterByType(shape : Class<T>) : List<ColoredShape2d> = listOfAllShape.filterIsInstance(shape)
-    override fun getSorted(comparatorForShape : Comparator<T>) = listOfAllShape.sortWith(comparatorForShape)
-
-    init {
-        listOfAllShape = newList.toMutableList()
-    }
-
+    override fun allShapesInList() : List<T> = listOfAllShape
+    override fun groupByBorderColor() : Map<Color, List<T>> = listOfAllShape.groupBy { it.borderColor }
+    override fun groupByColorFill() : Map<Color, List<T>> = listOfAllShape.groupBy { it.fillColor }
+    override fun filterByType(shape : Class<out T>) : List<T> = listOfAllShape.filterIsInstance(shape)
+    override fun getSorted(comparatorForShape : Comparator<in T>) = listOfAllShape.sortWith(comparatorForShape)
 }
 
-
+//inline fun <reified T> isType(value: Any) = value is T ?
+//https://russianblogs.com/article/7145452244/
+//http://developer.alexanderklimov.ru/android/kotlin/collection.php#filter
 
 
 
