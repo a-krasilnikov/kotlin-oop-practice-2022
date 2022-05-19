@@ -3,14 +3,14 @@ package lab2.shapeCollector
 import lab2.ColorRGBA
 import lab2.shapesInterface.ColoredShape2d
 
-class ShapeCollector<out T : ColoredShape2d>(_shapeList: List<T>) : ShapeCollectorInterface<T> {
+class ShapeCollector<T : ColoredShape2d>(_shapeList: List<T>) : ShapeCollectorInterface<T> {
     private val shapeList: MutableList<T>
 
     init {
         shapeList = _shapeList.toMutableList()
     }
 
-    override fun add(shape: @UnsafeVariance T) {
+    override fun add(shape: T) {
         shapeList.add(shape)
     }
 
@@ -63,3 +63,5 @@ class ShapeCollector<out T : ColoredShape2d>(_shapeList: List<T>) : ShapeCollect
         return sortedShapeList.toList()
     }
 }
+
+

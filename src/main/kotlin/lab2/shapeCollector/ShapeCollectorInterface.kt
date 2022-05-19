@@ -3,8 +3,8 @@ package lab2.shapeCollector
 import lab2.ColorRGBA
 import lab2.shapesInterface.ColoredShape2d
 
-interface ShapeCollectorInterface<out T : ColoredShape2d> {
-    fun add(shape: @UnsafeVariance T)
+interface ShapeCollectorInterface<T : ColoredShape2d> {
+    fun add(shape: T)
 
     fun minAreaFilter(): List<T>
 
