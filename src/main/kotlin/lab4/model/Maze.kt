@@ -14,8 +14,19 @@ enum class Direction {
 }
 
 @Serializable
-class Maze(private val mazeData: MutableList<MutableList<Cell>>) {
+class Maze(private var _mazeData: List<List<Cell>>) {
+
+    // private var _mazeData for @Serializable
+    private var mazeData: MutableList<MutableList<Cell>>
+
+    init {
+        mazeData = mutableListOf<MutableList<Cell>>()
+        for (i in _mazeData.indices)
+            mazeData.add(_mazeData[i].toMutableList())
+    }
+
     var isWin: Boolean
+        private set
 
     private var currI: Int
 
@@ -27,13 +38,13 @@ class Maze(private val mazeData: MutableList<MutableList<Cell>>) {
         isWin = true
 
 
-        for (i in 0 until mazeData.size)
-            for (j in 0 until mazeData[0].size) {
-                if (mazeData[i][j] == Cell.PLAYER) {
+        for (i in _mazeData.indices)
+            for (j in 0 until _mazeData[0].size) {
+                if (_mazeData[i][j] == Cell.PLAYER) {
                     currI = i
                     currJ = j
                 }
-                if (mazeData[i][j] == Cell.FINISH)
+                if (_mazeData[i][j] == Cell.FINISH)
                     isWin = false
             }
 
@@ -74,16 +85,16 @@ class Maze(private val mazeData: MutableList<MutableList<Cell>>) {
     }
 
     private fun isCellEmpty(i: Int, j: Int) =
-        i >= 0 && j >= 0 && i < mazeData.size && j < mazeData[0].size && (mazeData[i][j] == Cell.EMPTY || mazeData[i][j] == Cell.FINISH)
+        i >= 0 && j >= 0 && i < _mazeData.size && j < _mazeData[0].size && (_mazeData[i][j] == Cell.EMPTY || _mazeData[i][j] == Cell.FINISH)
 
     private fun moveThePlayer(i: Int, j: Int) {
         if (isCellEmpty(i, j)) {
             mazeData[currI][currJ] = Cell.EMPTY
-            isWin = (mazeData[i][j] == Cell.FINISH)
+            isWin = (_mazeData[i][j] == Cell.FINISH)
             mazeData[i][j] = Cell.PLAYER
             currI = i
             currJ = j
-
+            _mazeData = mazeData.toList()
         } else
             throw IllegalArgumentException("Can't move there!")
 
@@ -114,5 +125,4 @@ class Maze(private val mazeData: MutableList<MutableList<Cell>>) {
                 append("‾ ")
         }
     }
-
 }
