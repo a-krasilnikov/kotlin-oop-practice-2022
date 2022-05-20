@@ -2,6 +2,7 @@ package lab4.controller
 
 import lab4.model.Direction
 import lab4.model.Maze
+import lab4.model.MazeSerializationFileUtils
 
 class Controller(private val maze: Maze) {
     init {
@@ -22,7 +23,7 @@ class Controller(private val maze: Maze) {
                         'e' -> {
                             println("Get the FileName...")
                             val fileName = readln()
-                            maze.writeMazeToFile(fileName)
+                            MazeSerializationFileUtils.serializationToFile(maze.getMazeData(), fileName)
                             isExit = true
                             break
                         }

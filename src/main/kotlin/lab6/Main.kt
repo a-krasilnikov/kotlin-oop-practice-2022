@@ -2,11 +2,12 @@
 
 package lab6
 
-import lab6.shapeCollector.ShapeCollector
-import lab6.shapes.Circle
-import lab6.shapes.Rectangle
-import lab6.shapes.Square
-import lab6.shapes.Triangle
+import lab2.ColorRGBA
+import lab2.shapeCollector.ShapeCollector
+import lab2.shapes.Circle
+import lab2.shapes.Rectangle
+import lab2.shapes.Square
+import lab2.shapes.Triangle
 import lab6.serializationUtil.ShapeCollectorSerializationUtil
 
 
@@ -25,10 +26,10 @@ fun main() {
     var shapeCollection = ShapeCollector(listOf(circle1, rectangle, square1, triangle))
 
     //write shapeCollection to the file1.txt
-    ShapeCollectorSerializationUtil.serializationToFile(shapeCollection, "file1.txt")
+    ShapeCollectorSerializationUtil.serializationToFile(shapeCollection.getShapeList(), "file1.txt")
 
     //read shapeCollection from the file1.txt
-    shapeCollection = ShapeCollectorSerializationUtil.deserializationFromFile("file1.txt")
+    shapeCollection = ShapeCollector(ShapeCollectorSerializationUtil.deserializationFromFile("file1.txt"))
 
 
     //add new shapes to the shapeCollection
@@ -36,5 +37,5 @@ fun main() {
     shapeCollection.add(square2)
 
     //write shapeCollection to the file2.txt
-    ShapeCollectorSerializationUtil.serializationToFile(shapeCollection, "file2.txt")
+    ShapeCollectorSerializationUtil.serializationToFile(shapeCollection.getShapeList(), "file2.txt")
 }

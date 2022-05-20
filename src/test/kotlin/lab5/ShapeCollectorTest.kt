@@ -6,7 +6,6 @@ import lab2.shapes.Circle
 import lab2.shapes.Rectangle
 import lab2.shapes.Square
 import lab2.shapes.Triangle
-import lab2.shapesInterface.ColoredShape2d
 import lab5.comparator.AreaComparator
 import lab5.comparator.RadiusComparator
 import org.junit.jupiter.api.Test
@@ -32,7 +31,7 @@ internal class ShapeCollectorTest { //Tests only for new funs
     @Test
     fun addAll() {
 
-        val testShapeCollection = ShapeCollector(emptyList<ColoredShape2d>())
+        val testShapeCollection = ShapeCollector(emptyList())
         val shapeList = fullShapeCollection.getShapeList()
 
         testShapeCollection.addAll(shapeList)

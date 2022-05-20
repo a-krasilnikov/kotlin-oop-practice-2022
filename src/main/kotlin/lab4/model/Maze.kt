@@ -13,17 +13,9 @@ enum class Direction {
     RIGHT;
 }
 
-@Serializable
-class Maze(private var _mazeData: List<List<Cell>>) {
+class Maze(_mazeData: List<List<Cell>>) {
 
-    // private var _mazeData for @Serializable
     private var mazeData: MutableList<MutableList<Cell>>
-
-    init {
-        mazeData = mutableListOf<MutableList<Cell>>()
-        for (i in _mazeData.indices)
-            mazeData.add(_mazeData[i].toMutableList())
-    }
 
     var isWin: Boolean
         private set
@@ -33,6 +25,12 @@ class Maze(private var _mazeData: List<List<Cell>>) {
     private var currJ: Int
 
     init {
+        //copy mazeData
+        mazeData = mutableListOf()
+        for (i in _mazeData.indices)
+            mazeData.add(_mazeData[i].toMutableList())
+
+        //find current location
         currI = -1
         currJ = -1
         isWin = true
@@ -62,9 +60,6 @@ class Maze(private var _mazeData: List<List<Cell>>) {
         override fun toString(): String = textValue
     }
 
-    constructor(fileName: String) : this(MazeSerializationUtils.deserializationFromFile(fileName))
-
-
     private val listeners: MutableSet<ModelChangeListener> = mutableSetOf()
 
     fun addModelChangeListener(listener: ModelChangeListener) {
@@ -79,22 +74,18 @@ class Maze(private var _mazeData: List<List<Cell>>) {
         listeners.forEach { it.onModelChanged() }
     }
 
-
-    fun writeMazeToFile(fileName: String) {
-        MazeSerializationUtils.serializationToFile(mazeData, fileName)
-    }
+    fun getMazeData() = mazeData.toMutableList()
 
     private fun isCellEmpty(i: Int, j: Int) =
-        i >= 0 && j >= 0 && i < _mazeData.size && j < _mazeData[0].size && (_mazeData[i][j] == Cell.EMPTY || _mazeData[i][j] == Cell.FINISH)
+        i >= 0 && j >= 0 && i < mazeData.size && j < mazeData[0].size && (mazeData[i][j] == Cell.EMPTY || mazeData[i][j] == Cell.FINISH)
 
     private fun moveThePlayer(i: Int, j: Int) {
         if (isCellEmpty(i, j)) {
             mazeData[currI][currJ] = Cell.EMPTY
-            isWin = (_mazeData[i][j] == Cell.FINISH)
+            isWin = (mazeData[i][j] == Cell.FINISH)
             mazeData[i][j] = Cell.PLAYER
             currI = i
             currJ = j
-            _mazeData = mazeData.toList()
         } else
             throw IllegalArgumentException("Can't move there!")
 

@@ -6,12 +6,11 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import kotlinx.serialization.modules.subclass
-import lab6.shapeCollector.ShapeCollector
-import lab6.shapes.Circle
-import lab6.shapes.Rectangle
-import lab6.shapes.Square
-import lab6.shapes.Triangle
-import lab6.shapesInterface.ColoredShape2d
+import lab2.shapes.Circle
+import lab2.shapes.Rectangle
+import lab2.shapes.Square
+import lab2.shapes.Triangle
+import lab2.shapesInterface.ColoredShape2d
 import java.io.File
 
 object ShapeCollectorSerializationUtil {
@@ -26,17 +25,17 @@ object ShapeCollectorSerializationUtil {
         }
     }
 
-    fun serialization(shapeCollection: ShapeCollector) =
-        json.encodeToString(shapeCollection)
+    fun serialization(shapeList: List<ColoredShape2d>) =
+        json.encodeToString(shapeList)
 
     fun deserialization(stringToDecoder: String) =
-        json.decodeFromString<ShapeCollector>(stringToDecoder)
+        json.decodeFromString<List<ColoredShape2d>>(stringToDecoder)
 
-    fun serializationToFile(shapeCollection: ShapeCollector, fileName: String) {
-        File(fileName).writeText(serialization(shapeCollection))
+    fun serializationToFile(shapeList: List<ColoredShape2d>, fileName: String) {
+        File(fileName).writeText(serialization(shapeList))
     }
 
-    fun deserializationFromFile(fileName: String): ShapeCollector {
+    fun deserializationFromFile(fileName: String): List<ColoredShape2d> {
         val file = File(fileName)
         if (!file.exists())
             throw IllegalArgumentException("Incorrect file name")

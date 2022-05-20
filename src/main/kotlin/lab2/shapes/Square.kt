@@ -2,7 +2,9 @@ package lab2.shapes
 
 import lab2.ColorRGBA
 import lab2.shapesInterface.ColoredShape2d
+import kotlinx.serialization.Serializable
 
+@Serializable
 class Square(val a: Double, override val borderColorRGBA: ColorRGBA, override val fillColorRGBA: ColorRGBA) :
     ColoredShape2d {
 
@@ -19,5 +21,25 @@ class Square(val a: Double, override val borderColorRGBA: ColorRGBA, override va
                 "\ta: $a\n" +
                 "\tborderColorRGBA: $borderColorRGBA\n" +
                 "\tfillColorRGBA: $fillColorRGBA)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Square
+
+        if (a != other.a) return false
+        if (borderColorRGBA != other.borderColorRGBA) return false
+        if (fillColorRGBA != other.fillColorRGBA) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = a.hashCode()
+        result = 31 * result + borderColorRGBA.hashCode()
+        result = 31 * result + fillColorRGBA.hashCode()
+        return result
     }
 }

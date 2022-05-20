@@ -1,12 +1,13 @@
 package lab6
 
 import kotlinx.serialization.encodeToString
+import lab2.ColorRGBA
 import lab6.serializationUtil.ShapeCollectorSerializationUtil
-import lab6.shapeCollector.ShapeCollector
-import lab6.shapes.Circle
-import lab6.shapes.Rectangle
-import lab6.shapes.Square
-import lab6.shapes.Triangle
+import lab2.shapeCollector.ShapeCollector
+import lab2.shapes.Circle
+import lab2.shapes.Rectangle
+import lab2.shapes.Square
+import lab2.shapes.Triangle
 import org.junit.jupiter.api.Test
 import java.io.File
 import kotlin.test.assertEquals
@@ -32,33 +33,33 @@ internal class ShapeCollectorSerializationUtilTest {
     private val shapeCollection2 = ShapeCollector(shapeList2)
     private val shapeCollection3 = ShapeCollector(shapeList3)
 
-    private val jsonShapeCollection1: String = ShapeCollectorSerializationUtil.serialization(shapeCollection1)
-    private val jsonShapeCollection2: String = ShapeCollectorSerializationUtil.serialization(shapeCollection2)
-    private val jsonShapeCollection3: String = ShapeCollectorSerializationUtil.serialization(shapeCollection3)
+    private val jsonShapeCollection1: String = ShapeCollectorSerializationUtil.serialization(shapeCollection1.getShapeList())
+    private val jsonShapeCollection2: String = ShapeCollectorSerializationUtil.serialization(shapeCollection2.getShapeList())
+    private val jsonShapeCollection3: String = ShapeCollectorSerializationUtil.serialization(shapeCollection3.getShapeList())
 
 
     @Test
     fun serialization() {
-        assertEquals(ShapeCollectorSerializationUtil.json.encodeToString(shapeCollection1), jsonShapeCollection1)
-        assertEquals(ShapeCollectorSerializationUtil.json.encodeToString(shapeCollection2), jsonShapeCollection2)
-        assertEquals(ShapeCollectorSerializationUtil.json.encodeToString(shapeCollection3), jsonShapeCollection3)
+        assertEquals(ShapeCollectorSerializationUtil.json.encodeToString(shapeCollection1.getShapeList()), jsonShapeCollection1)
+        assertEquals(ShapeCollectorSerializationUtil.json.encodeToString(shapeCollection2.getShapeList()), jsonShapeCollection2)
+        assertEquals(ShapeCollectorSerializationUtil.json.encodeToString(shapeCollection3.getShapeList()), jsonShapeCollection3)
 
     }
 
 
     @Test
     fun deserialization() {
-        assertEquals(shapeCollection1, ShapeCollectorSerializationUtil.deserialization(jsonShapeCollection1))
-        assertEquals(shapeCollection2, ShapeCollectorSerializationUtil.deserialization(jsonShapeCollection2))
-        assertEquals(shapeCollection3, ShapeCollectorSerializationUtil.deserialization(jsonShapeCollection3))
+        assertEquals(shapeCollection1.getShapeList(), ShapeCollectorSerializationUtil.deserialization(jsonShapeCollection1))
+        assertEquals(shapeCollection2.getShapeList(), ShapeCollectorSerializationUtil.deserialization(jsonShapeCollection2))
+        assertEquals(shapeCollection3.getShapeList(), ShapeCollectorSerializationUtil.deserialization(jsonShapeCollection3))
 
     }
 
     @Test
     fun serializationToFile() {
-        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection1, "shapeCollection1.txt")
-        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection2, "shapeCollection2.txt")
-        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection3, "shapeCollection3.txt")
+        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection1.getShapeList(), "shapeCollection1.txt")
+        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection2.getShapeList(), "shapeCollection2.txt")
+        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection3.getShapeList(), "shapeCollection3.txt")
 
         val file1 = File("shapeCollection1.txt")
         val file2 = File("shapeCollection2.txt")
@@ -76,12 +77,12 @@ internal class ShapeCollectorSerializationUtilTest {
 
     @Test
     fun deserializationFromFile() {
-        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection1, "shapeCollection1.txt")
-        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection2, "shapeCollection2.txt")
-        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection3, "shapeCollection3.txt")
+        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection1.getShapeList(), "shapeCollection1.txt")
+        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection2.getShapeList(), "shapeCollection2.txt")
+        ShapeCollectorSerializationUtil.serializationToFile(shapeCollection3.getShapeList(), "shapeCollection3.txt")
 
-        assertEquals(shapeCollection1, ShapeCollectorSerializationUtil.deserializationFromFile("shapeCollection1.txt"))
-        assertEquals(shapeCollection2, ShapeCollectorSerializationUtil.deserializationFromFile("shapeCollection2.txt"))
-        assertEquals(shapeCollection3, ShapeCollectorSerializationUtil.deserializationFromFile("shapeCollection3.txt"))
+        assertEquals(shapeCollection1.getShapeList(), ShapeCollectorSerializationUtil.deserializationFromFile("shapeCollection1.txt"))
+        assertEquals(shapeCollection2.getShapeList(), ShapeCollectorSerializationUtil.deserializationFromFile("shapeCollection2.txt"))
+        assertEquals(shapeCollection3.getShapeList(), ShapeCollectorSerializationUtil.deserializationFromFile("shapeCollection3.txt"))
     }
 }

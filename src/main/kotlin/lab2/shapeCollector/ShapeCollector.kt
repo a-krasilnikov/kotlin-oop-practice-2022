@@ -51,13 +51,13 @@ class ShapeCollector<T : ColoredShape2d>(_shapeList: List<T>) : ShapeCollectorIn
 
     override fun groupByType(): Map<Class<Any>, List<T>> = shapeList.groupBy { it.javaClass }
 
-    fun addAll(newShapesList: List<@UnsafeVariance T>) {
+    fun addAll(newShapesList: List<T>) {
         newShapesList.forEach {
             shapeList.add(it)
         }
     }
 
-    fun getSorted(shapesComparator: Comparator<@UnsafeVariance T>): List<T> {
+    fun getSorted(shapesComparator: Comparator<T>): List<T> {
         val sortedShapeList = shapeList
         sortedShapeList.sortWith(shapesComparator)
         return sortedShapeList.toList()
