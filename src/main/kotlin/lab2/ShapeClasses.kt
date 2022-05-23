@@ -10,7 +10,7 @@ interface ColoredShape2d : Shape2d {
     val borderColor : Color
     val fillColor : Color
 }
-
+@kotlinx.serialization.Serializable
 data class Color(val red : Int, val green : Int, val blue : Int, val transparency : Int) {
     init {
         if ((red !in (0..255))) {
@@ -31,18 +31,20 @@ data class Color(val red : Int, val green : Int, val blue : Int, val transparenc
 
 }
 
-
+@kotlinx.serialization.Serializable
 data class Square(
     val side : Double,
     override val borderColor : Color,
     override val fillColor : Color,
 ) : ColoredShape2d {
-    if (side <= 0.0)  {
-        throw IllegalArgumentException("The value must be between 1 and +inf: ")
+    init {
+        if (side <= 0.0) {
+            throw IllegalArgumentException("The value must be between 1 and +inf: ")
+        }
     }
     override fun calcArea() : Double = side * side
 }
-
+@kotlinx.serialization.Serializable
 data class Rectangle(
     val height : Double,
     val width : Double,
@@ -57,7 +59,7 @@ data class Rectangle(
 
     override fun calcArea() : Double = height * width
 }
-
+@kotlinx.serialization.Serializable
 data class Triangle(
     val height : Double,
     val side : Double,
@@ -72,7 +74,7 @@ data class Triangle(
 
     override fun calcArea() : Double = height * side * 0.5
 }
-
+@kotlinx.serialization.Serializable
 data class Circle(
     val radius : Double,
     override val borderColor : Color,

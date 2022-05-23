@@ -1,8 +1,7 @@
 package lab2
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class ShapeCollectorTest {
 
@@ -256,5 +255,33 @@ internal class ShapeCollectorTest {
         )
 
 
+    }
+
+    @Test
+    fun SerializationsDeserializationJsonLogic() {
+        val emptyList = mutableListOf<ColoredShape2d>()
+        val serializationsDeserializationJsonLogic = lab2.SerializationsDeserializationJson()
+
+        val shapeCollection = ShapeCollector(emptyList).also {
+            it.addShapeToList(Circle(100.0, Color(6, 7, 4, 96), Color(46, 44, 12, 47)))
+            it.addShapeToList(Triangle(2.5, 4.0, Color(1, 4, 7, 81), Color(43, 45, 14, 58)))
+        }
+
+        val listJson = serializationsDeserializationJsonLogic.serialization(shapeCollection.allShapesInList())
+
+        serializationsDeserializationJsonLogic.outputToFile(listJson,
+            "C:\\Users\\DASHA\\IdeaProjects\\kotlin-oop-practice-2022\\src\\main\\kotlin\\lab2\\out.json")
+
+
+        val input =
+            serializationsDeserializationJsonLogic.inputFromFile("C:\\Users\\DASHA\\IdeaProjects\\kotlin-oop-practice-2022\\src\\main\\kotlin\\lab2\\out.json")
+        val deserializationList = serializationsDeserializationJsonLogic.deserialization(input)
+        println(deserializationList)
+
+        val newShapesDeserialisation = ShapeCollector(deserializationList)
+
+        assertEquals(
+            newShapesDeserialisation.allShapesInList(), shapeCollection.allShapesInList()
+        )
     }
 }

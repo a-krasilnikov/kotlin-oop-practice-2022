@@ -26,7 +26,7 @@ fun parserAddresses(listOfAddresses : String) : List<AddressesBlocks> {
 }
 
 fun maxIndexInAddresses(newAddressesBlocks : List<AddressesBlocks>) : AddressesBlocks? {
-    return newAddressesBlocks.maxByOrNull { it.index }//https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.sequences/max-by-or-null.html
+    return newAddressesBlocks.maxByOrNull { it.index }
 }
 
 fun minIndexInAddresses(newAddressesBlocks : List<AddressesBlocks>) : AddressesBlocks? {
