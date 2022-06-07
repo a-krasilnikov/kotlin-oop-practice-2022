@@ -24,15 +24,15 @@ object SerializationLogic {
 
 class SerializationsDeserializationJson {
 
-    fun serialization(list : List<ColoredShape2d>):String = SerializationLogic.json.encodeToString(list)
+    fun serialization(list : List<ColoredShape2d>) : String = SerializationLogic.json.encodeToString(list)
 
-    fun deserialization(list : String): List<ColoredShape2d> = SerializationLogic.json.decodeFromString(list)
+    fun deserialization(list : String) : List<ColoredShape2d> = SerializationLogic.json.decodeFromString(list)
 
     fun inputFromFile(inputFile : String) : String {
         return File(inputFile).readText()
     }
 
-    fun outputToFile(answer :String, outputFile : String) {
+    fun outputToFile(answer : String, outputFile : String) {
         File(outputFile).writeText(answer)
     }
 }

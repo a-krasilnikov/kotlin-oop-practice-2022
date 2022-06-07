@@ -14,6 +14,20 @@ enum class State(private val textValue : String) {
 }
 
 
+fun inputFile(name:String): Map<Pair<Int, Int>, Char> {
+    val inputNew =
+        File(name).readLines()
+            .withIndex().flatMap { indexedValue ->
+                val xCoordinate = indexedValue.index
+                indexedValue.value.toCharArray().withIndex().map { indexedChar ->
+                    val yCoordinate = indexedChar.index
+                    (xCoordinate to yCoordinate) to indexedChar.value
+                }
+            }.toMap()
+    return (inputNew)
+}
+
+
 fun inputMaze() : Map<Pair<Int, Int>, Char> {
     var condition = "1"
     val input = emptyMap<Pair<Int, Int>, Char>()
