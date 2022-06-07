@@ -1,9 +1,7 @@
 package CheckersGame.View
 import CheckersGame.*
-import java.awt.BorderLayout
-import java.awt.Color
-import java.awt.Component
-import java.awt.GridLayout
+import CheckersGame.ImageCheckers.nameImage
+import java.awt.*
 import javax.swing.*
 
 private const val GAP = 0
@@ -14,7 +12,7 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
     private val buttons = mutableListOf<MutableList<JButton>>()
     private var BOARD_SIZE=8
     init {
-        setSize(500, 500)
+        setSize(1000, 1000)
         defaultCloseOperation = EXIT_ON_CLOSE
 
         updateFont(statusLabel, 20.0f)
@@ -62,7 +60,7 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
 
     private fun createBoardPanel(): Component {
         val gamePanel = JPanel(GridLayout(BOARD_SIZE, BOARD_SIZE, GAP, GAP))
-//BOARD_SIZE-1 downTo  0
+
         for (i in BOARD_SIZE-1 downTo  0) {
             val buttonsRow = mutableListOf<JButton>()
 
@@ -118,26 +116,40 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
         val state = gameModel.state
         statusLabel.text = state.textValue
 
-        for ((i, buttonRow) in buttons.withIndex()) {
-            for ((j, button) in buttonRow.withIndex()) {
-               // val cell : CheckerParameters?
-                val checker = gameModel.piecesBoard.elementAt(0)
-               if (checker==CheckerParameters( j,i, Player.WHITE, CheckersMode.CHECKERS)){
-                   button.apply {
-
-                       background=Color.BLUE
-                   }
-               }
-                if (checker==CheckerParameters(j,i, Player.BLACK, CheckersMode.CHECKERS)){
-                    button.apply {
-
-                        background=Color.GREEN
-                    }
+        gameModel.piecesBoard.forEach {
+         print(it.row.toString() + " " + it.col.toString() + " | ")
+            if(it.Checker == CheckersMode.CHECKERS && it.player == Player.WHITE) {
+                buttons[it.row][it.col].apply {
+                    background=Color.lightGray
+                    icon = ImageIcon(nameImage.whiteChecker.getScaledInstance(60, 60, Image.SCALE_SMOOTH))
                 }
-
             }
 
+            if(it.Checker == CheckersMode.CHECKERS && it.player == Player.BLACK) {
+                buttons[it.row][it.col].apply {
+                    background=Color.lightGray
+                    icon = ImageIcon(nameImage.blackChecker.getScaledInstance(60, 60, Image.SCALE_SMOOTH))
+
+                }
+            }
+
+            if(it.Checker == CheckersMode.QUEEN && it.player == Player.WHITE) {
+                buttons[it.row][it.col].apply {
+                    background=Color.lightGray
+                    icon = ImageIcon(nameImage.whiteQueen.getScaledInstance(60, 60, Image.SCALE_SMOOTH))
+
+                }
+            }
+
+            if(it.Checker == CheckersMode.QUEEN && it.player == Player.BLACK) {
+                buttons[it.row][it.col].apply {
+                    background=Color.lightGray
+                    icon = ImageIcon(nameImage.blackQueen.getScaledInstance(60, 60, Image.SCALE_SMOOTH))
+
+                }
+            }
         }
+
     }
 
 

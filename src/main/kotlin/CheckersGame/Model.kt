@@ -61,14 +61,14 @@ class ModelGame {
         for (i in 5 until 8) {//row
             if (i.mod(2) != 0) {
                 for (j in 0 until 8) {//col
-                    if (j.mod(2) != 0) {
+                    if (j.mod(2) == 0) {
                         addPiece(CheckerParameters(j, i, Player.BLACK, CheckersMode.CHECKERS))
 
                     }
                 }
             } else {
                 for (j in 0 until 8) {//col
-                    if (j.mod(2) == 0) {
+                    if (j.mod(2) != 0) {
                         addPiece(CheckerParameters(j, i, Player.BLACK, CheckersMode.CHECKERS))
 
                     }
@@ -81,14 +81,14 @@ class ModelGame {
         for (i in 0 until 3) {//row
             if (i.mod(2) != 0) {
                 for (j in 0 until 8) {//col
-                    if (j.mod(2) != 0) {
+                    if (j.mod(2) == 0) {
                         addPiece(CheckerParameters(j, i, Player.WHITE, CheckersMode.CHECKERS))
 
                     }
                 }
             } else {
                 for (j in 0 until 8) {//col
-                    if (j.mod(2) == 0) {
+                    if (j.mod(2) != 0) {
                         addPiece(CheckerParameters(j, i, Player.WHITE, CheckersMode.CHECKERS))
 
                     }
