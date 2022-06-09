@@ -2,32 +2,22 @@ package CheckersGame
 
 import java.lang.Math.abs
 
-data class Square(val col : Int, val row : Int)
 
 enum class CheckersMode {
-    //состояние шашки
-    QUEEN,
-    CHECKERS,
-    EMPTY,
-
+    QUEEN, CHECKERS, EMPTY,
 }
 
 enum class State(val textValue : String) {
-    WHITE_MOVE("Waiting for WHITE move..."),
-    BLACK_MOVE("Waiting for BLACK move..."),
-    WHITE_WIN("Game finished. WHITE win, congrats!!!"),
-    BLACK_WIN("Game finished. BLACK win, congrats!!!"),
-    DRAW("Game finished. Draw")
+    WHITE_MOVE("Waiting for WHITE move..."), BLACK_MOVE("Waiting for BLACK move..."), WHITE_WIN("Game finished. WHITE win, congrats!!!"), BLACK_WIN(
+        "Game finished. BLACK win, congrats!!!"),
 }
 
 enum class Player {
-    WHITE,
-    BLACK,
-    EMPTY,
+    WHITE, BLACK, EMPTY,
 }
 
 private val FIRST_MOVE = State.WHITE_MOVE
-val GAME_NOT_FINISHED = setOf(State.WHITE_MOVE, State.BLACK_MOVE)
+val GAME_NOT_FINISHED = setOf(State.WHITE_MOVE, State.BLACK_MOVE, State.BLACK_WIN, State.WHITE_WIN)
 
 interface ModelChangeListener {
     fun onModelChanged()
@@ -37,12 +27,12 @@ data class CheckerParameters(val col : Int, val row : Int, val player : Player, 
 
 class ModelGame {
     var piecesBoard = mutableSetOf<CheckerParameters>()
+    var state : State = FIRST_MOVE
 
     init {
+
         resetGame()
     }
-    var state: State = FIRST_MOVE
-
 
     fun clear() {
         piecesBoard.clear()
@@ -66,8 +56,7 @@ class ModelGame {
                     if (j.mod(2) == 0) {
                         addPiece(CheckerParameters(j, i, Player.WHITE, CheckersMode.CHECKERS))
                         check = 1
-                    }
-                    else{
+                    } else {
                         addPiece(CheckerParameters(j, i, Player.EMPTY, CheckersMode.EMPTY))
                     }
                 }
@@ -76,8 +65,7 @@ class ModelGame {
                     if (j.mod(2) != 0) {
                         addPiece(CheckerParameters(j, i, Player.WHITE, CheckersMode.CHECKERS))
                         check = 1
-                    }
-                    else{
+                    } else {
                         addPiece(CheckerParameters(j, i, Player.EMPTY, CheckersMode.EMPTY))
                     }
                 }
@@ -103,8 +91,7 @@ class ModelGame {
                     if (j.mod(2) == 0) {
                         addPiece(CheckerParameters(j, i, Player.BLACK, CheckersMode.CHECKERS))
                         check = 1
-                    }
-                    else{
+                    } else {
                         addPiece(CheckerParameters(j, i, Player.EMPTY, CheckersMode.EMPTY))
                     }
                 }
@@ -113,8 +100,7 @@ class ModelGame {
                     if (j.mod(2) != 0) {
                         addPiece(CheckerParameters(j, i, Player.BLACK, CheckersMode.CHECKERS))
                         check = 1
-                    }
-                    else{
+                    } else {
                         addPiece(CheckerParameters(j, i, Player.EMPTY, CheckersMode.EMPTY))
                     }
                 }
@@ -128,9 +114,6 @@ class ModelGame {
 
             }
         }
-
-
-
     }
 
     fun pgnBoard() : String {
@@ -159,10 +142,6 @@ class ModelGame {
         return desc
     }
 
-    fun pieceAt(square : Square) : CheckerParameters? {
-        return pieceAt(square.col, square.row)
-    }
-
     fun pieceAt(col : Int, row : Int) : CheckerParameters? {
         for (piece in piecesBoard) {
             if (col == piece.col && row == piece.row) {
@@ -170,12 +149,6 @@ class ModelGame {
             }
         }
         return null
-    }
-
-    fun checkColor(nextCol : Int, nextRow : Int) : Boolean {
-        var elem : CheckerParameters?
-        elem = pieceAt(nextCol, nextRow)
-        return (elem == CheckerParameters(nextCol, nextRow, Player.WHITE, CheckersMode.CHECKERS))
     }
 
     fun checkDouble(startCol : Int, startRow : Int, nextCol : Int, nextRow : Int) : Int {
@@ -200,13 +173,19 @@ class ModelGame {
                     elemNew = pieceAt(col - 1, row + 1)
 
 
-                    if (((elemBlack == CheckerParameters(col, row, Player.BLACK, CheckersMode.CHECKERS)) ||
-                                (elemBlack == CheckerParameters(col, row, Player.BLACK, CheckersMode.QUEEN))) &&
-                        ((elemNew == CheckerParameters(col - 1, row + 1, Player.BLACK, CheckersMode.CHECKERS)) ||
-                                (elemNew == CheckerParameters(col - 1,
-                                    row + 1,
-                                    Player.BLACK,
-                                    CheckersMode.QUEEN)))
+                    if (((elemBlack == CheckerParameters(col,
+                            row,
+                            Player.BLACK,
+                            CheckersMode.CHECKERS)) || (elemBlack == CheckerParameters(col,
+                            row,
+                            Player.BLACK,
+                            CheckersMode.QUEEN))) && ((elemNew == CheckerParameters(col - 1,
+                            row + 1,
+                            Player.BLACK,
+                            CheckersMode.CHECKERS)) || (elemNew == CheckerParameters(col - 1,
+                            row + 1,
+                            Player.BLACK,
+                            CheckersMode.QUEEN)))
                     ) {
                         ratioNew = abs(startCol - col)
                         print(ratioNew)
@@ -221,13 +200,19 @@ class ModelGame {
                         doubleBlack++
                     }
                     elemNew = pieceAt(col + 1, row + 1)
-                    if (((elemBlack == CheckerParameters(col, row, Player.BLACK, CheckersMode.CHECKERS)) ||
-                                (elemBlack == CheckerParameters(col, row, Player.BLACK, CheckersMode.QUEEN))) &&
-                        ((elemNew == CheckerParameters(col + 1, row + 1, Player.BLACK, CheckersMode.CHECKERS)) ||
-                                (elemNew == CheckerParameters(col + 1,
-                                    row + 1,
-                                    Player.BLACK,
-                                    CheckersMode.QUEEN)))
+                    if (((elemBlack == CheckerParameters(col,
+                            row,
+                            Player.BLACK,
+                            CheckersMode.CHECKERS)) || (elemBlack == CheckerParameters(col,
+                            row,
+                            Player.BLACK,
+                            CheckersMode.QUEEN))) && ((elemNew == CheckerParameters(col + 1,
+                            row + 1,
+                            Player.BLACK,
+                            CheckersMode.CHECKERS)) || (elemNew == CheckerParameters(col + 1,
+                            row + 1,
+                            Player.BLACK,
+                            CheckersMode.QUEEN)))
                     ) {
                         ratioNew = abs(startCol - col)
                         print(ratioNew)
@@ -243,13 +228,19 @@ class ModelGame {
                     }
                     //bb
                     elemNew = pieceAt(col - 1, row + 1)
-                    if (((elemBlack == CheckerParameters(col, row, Player.WHITE, CheckersMode.CHECKERS)) ||
-                                (elemBlack == CheckerParameters(col, row, Player.WHITE, CheckersMode.QUEEN))) &&
-                        ((elemNew == CheckerParameters(col - 1, row + 1, Player.WHITE, CheckersMode.CHECKERS)) ||
-                                (elemNew == CheckerParameters(col - 1,
-                                    row + 1,
-                                    Player.WHITE,
-                                    CheckersMode.QUEEN)))
+                    if (((elemBlack == CheckerParameters(col,
+                            row,
+                            Player.WHITE,
+                            CheckersMode.CHECKERS)) || (elemBlack == CheckerParameters(col,
+                            row,
+                            Player.WHITE,
+                            CheckersMode.QUEEN))) && ((elemNew == CheckerParameters(col - 1,
+                            row + 1,
+                            Player.WHITE,
+                            CheckersMode.CHECKERS)) || (elemNew == CheckerParameters(col - 1,
+                            row + 1,
+                            Player.WHITE,
+                            CheckersMode.QUEEN)))
                     ) {
                         println("bb")
                         ratioNew = abs(startCol - col)
@@ -265,13 +256,19 @@ class ModelGame {
                         doubleBlack++
                     }
                     elemNew = pieceAt(col + 1, row + 1)
-                    if (((elemBlack == CheckerParameters(col, row, Player.WHITE, CheckersMode.CHECKERS)) ||
-                                (elemBlack == CheckerParameters(col, row, Player.WHITE, CheckersMode.QUEEN))) &&
-                        ((elemNew == CheckerParameters(col + 1, row + 1, Player.WHITE, CheckersMode.CHECKERS)) ||
-                                (elemNew == CheckerParameters(col + 1,
-                                    row + 1,
-                                    Player.WHITE,
-                                    CheckersMode.QUEEN)))
+                    if (((elemBlack == CheckerParameters(col,
+                            row,
+                            Player.WHITE,
+                            CheckersMode.CHECKERS)) || (elemBlack == CheckerParameters(col,
+                            row,
+                            Player.WHITE,
+                            CheckersMode.QUEEN))) && ((elemNew == CheckerParameters(col + 1,
+                            row + 1,
+                            Player.WHITE,
+                            CheckersMode.CHECKERS)) || (elemNew == CheckerParameters(col + 1,
+                            row + 1,
+                            Player.WHITE,
+                            CheckersMode.QUEEN)))
                     ) {
                         ratioNew = abs(startCol - col)
                         print(ratioNew)
@@ -287,13 +284,19 @@ class ModelGame {
                     }
                     //белые черные
                     elemNew = pieceAt(col - 1, row + 1)
-                    if (((elemBlack == CheckerParameters(col, row, Player.WHITE, CheckersMode.CHECKERS)) ||
-                                (elemBlack == CheckerParameters(col, row, Player.WHITE, CheckersMode.QUEEN))) &&
-                        ((elemNew == CheckerParameters(col - 1, row + 1, Player.BLACK, CheckersMode.CHECKERS)) ||
-                                (elemNew == CheckerParameters(col - 1,
-                                    row + 1,
-                                    Player.BLACK,
-                                    CheckersMode.QUEEN)))
+                    if (((elemBlack == CheckerParameters(col,
+                            row,
+                            Player.WHITE,
+                            CheckersMode.CHECKERS)) || (elemBlack == CheckerParameters(col,
+                            row,
+                            Player.WHITE,
+                            CheckersMode.QUEEN))) && ((elemNew == CheckerParameters(col - 1,
+                            row + 1,
+                            Player.BLACK,
+                            CheckersMode.CHECKERS)) || (elemNew == CheckerParameters(col - 1,
+                            row + 1,
+                            Player.BLACK,
+                            CheckersMode.QUEEN)))
                     ) {
                         ratioNew = abs(startCol - col)
                         print(ratioNew)
@@ -309,13 +312,19 @@ class ModelGame {
                         doubleBlack++
                     }
                     elemNew = pieceAt(col + 1, row + 1)
-                    if (((elemBlack == CheckerParameters(col, row, Player.WHITE, CheckersMode.CHECKERS)) ||
-                                (elemBlack == CheckerParameters(col, row, Player.WHITE, CheckersMode.QUEEN))) &&
-                        ((elemNew == CheckerParameters(col + 1, row + 1, Player.BLACK, CheckersMode.CHECKERS)) ||
-                                (elemNew == CheckerParameters(col + 1,
-                                    row + 1,
-                                    Player.BLACK,
-                                    CheckersMode.QUEEN)))
+                    if (((elemBlack == CheckerParameters(col,
+                            row,
+                            Player.WHITE,
+                            CheckersMode.CHECKERS)) || (elemBlack == CheckerParameters(col,
+                            row,
+                            Player.WHITE,
+                            CheckersMode.QUEEN))) && ((elemNew == CheckerParameters(col + 1,
+                            row + 1,
+                            Player.BLACK,
+                            CheckersMode.CHECKERS)) || (elemNew == CheckerParameters(col + 1,
+                            row + 1,
+                            Player.BLACK,
+                            CheckersMode.QUEEN)))
                     ) {
                         ratioNew = abs(startCol - col)
                         print(ratioNew)
@@ -332,13 +341,19 @@ class ModelGame {
 
                     //Черно белые
                     elemNew = pieceAt(col - 1, row + 1)
-                    if (((elemBlack == CheckerParameters(col, row, Player.BLACK, CheckersMode.CHECKERS)) ||
-                                (elemBlack == CheckerParameters(col, row, Player.BLACK, CheckersMode.QUEEN))) &&
-                        ((elemNew == CheckerParameters(col - 1, row + 1, Player.WHITE, CheckersMode.CHECKERS)) ||
-                                (elemNew == CheckerParameters(col - 1,
-                                    row + 1,
-                                    Player.WHITE,
-                                    CheckersMode.QUEEN)))
+                    if (((elemBlack == CheckerParameters(col,
+                            row,
+                            Player.BLACK,
+                            CheckersMode.CHECKERS)) || (elemBlack == CheckerParameters(col,
+                            row,
+                            Player.BLACK,
+                            CheckersMode.QUEEN))) && ((elemNew == CheckerParameters(col - 1,
+                            row + 1,
+                            Player.WHITE,
+                            CheckersMode.CHECKERS)) || (elemNew == CheckerParameters(col - 1,
+                            row + 1,
+                            Player.WHITE,
+                            CheckersMode.QUEEN)))
                     ) {
                         ratioNew = abs(startCol - col)
                         print(ratioNew)
@@ -353,13 +368,19 @@ class ModelGame {
                         doubleBlack++
                     }
                     elemNew = pieceAt(col + 1, row + 1)
-                    if (((elemBlack == CheckerParameters(col, row, Player.BLACK, CheckersMode.CHECKERS)) ||
-                                (elemBlack == CheckerParameters(col, row, Player.BLACK, CheckersMode.QUEEN))) &&
-                        ((elemNew == CheckerParameters(col + 1, row + 1, Player.WHITE, CheckersMode.CHECKERS)) ||
-                                (elemNew == CheckerParameters(col + 1,
-                                    row + 1,
-                                    Player.WHITE,
-                                    CheckersMode.QUEEN)))
+                    if (((elemBlack == CheckerParameters(col,
+                            row,
+                            Player.BLACK,
+                            CheckersMode.CHECKERS)) || (elemBlack == CheckerParameters(col,
+                            row,
+                            Player.BLACK,
+                            CheckersMode.QUEEN))) && ((elemNew == CheckerParameters(col + 1,
+                            row + 1,
+                            Player.WHITE,
+                            CheckersMode.CHECKERS)) || (elemNew == CheckerParameters(col + 1,
+                            row + 1,
+                            Player.WHITE,
+                            CheckersMode.QUEEN)))
                     ) {
                         ratioNew = abs(startCol - col)
                         print(ratioNew)
@@ -378,12 +399,12 @@ class ModelGame {
                 }
             }
 
-            println("rationew ")
+
 
             print(ratio)
 
             if ((ratio < ratioNew) || (ratioNew == 0)) {
-                println("rgfdhfjyfy ")
+
                 if ((elemStart == CheckerParameters(startCol, startRow, Player.WHITE, CheckersMode.QUEEN))) {
                     if (elemNext == null) {
 
@@ -410,17 +431,17 @@ class ModelGame {
         return doubleBlack
     }
 
-    fun whiteMove(startCol : Int, startRow : Int, nextCol : Int, nextRow : Int):Boolean {
+    fun whiteMove(startCol : Int, startRow : Int, nextCol : Int, nextRow : Int) : Boolean {
         println("white")
         var elemNext : CheckerParameters?
         var elemStart : CheckerParameters?
-        var moveWas=false
+        var moveWas = false
         elemStart = pieceAt(startCol, startRow)
         elemNext = pieceAt(nextCol, nextRow)
 
-        //обычный ход
+
         if (elemStart == CheckerParameters(startCol, startRow, Player.WHITE, CheckersMode.CHECKERS)) {
-            println("вошел в вайт")
+
             if (elemNext == CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY)) {
                 if (((startCol == nextCol + 1) || (startCol == nextCol - 1)) && (startRow + 1 == nextRow)) {
                     moveWas = true
@@ -441,10 +462,8 @@ class ModelGame {
                     addPiece(CheckerParameters(nextCol, nextRow, Player.WHITE, CheckersMode.CHECKERS))
                     delPiece(CheckerParameters(startCol, startRow, Player.WHITE, CheckersMode.CHECKERS))
                     addPiece(CheckerParameters(startCol, startRow, Player.EMPTY, CheckersMode.EMPTY))
-                    delPiece(CheckerParameters(startCol + 1 * scan, startRow + 1,
-                        Player.BLACK, CheckersMode.CHECKERS))
-                    addPiece(CheckerParameters(startCol + 1 * scan, startRow + 1,
-                        Player.EMPTY, CheckersMode.EMPTY))
+                    delPiece(CheckerParameters(startCol + 1 * scan, startRow + 1, Player.BLACK, CheckersMode.CHECKERS))
+                    addPiece(CheckerParameters(startCol + 1 * scan, startRow + 1, Player.EMPTY, CheckersMode.EMPTY))
                     moveWas = true
                 }
                 if (((startCol == nextCol + 2) || (startCol == nextCol - 2)) && (startRow - 2 == nextRow)) {
@@ -452,35 +471,32 @@ class ModelGame {
                     addPiece(CheckerParameters(nextCol, nextRow, Player.WHITE, CheckersMode.CHECKERS))
                     delPiece(CheckerParameters(startCol, startRow, Player.WHITE, CheckersMode.CHECKERS))
                     addPiece(CheckerParameters(startCol, startRow, Player.EMPTY, CheckersMode.EMPTY))
-                    delPiece(CheckerParameters(startCol + 1 * scan, startRow - 1,
-                        Player.BLACK, CheckersMode.CHECKERS))
+                    delPiece(CheckerParameters(startCol + 1 * scan, startRow - 1, Player.BLACK, CheckersMode.CHECKERS))
                     addPiece(CheckerParameters(startCol + 1 * scan, startRow - 1, Player.EMPTY, CheckersMode.EMPTY))
                     moveWas = true
                 }
             }
         }
-        if(elemNext==(CheckerParameters(nextCol, 7, Player.WHITE, CheckersMode.CHECKERS))){
+        if (elemNext == (CheckerParameters(nextCol, 7, Player.WHITE, CheckersMode.CHECKERS))) {
             delPiece(CheckerParameters(nextCol, 7, Player.WHITE, CheckersMode.CHECKERS))
             addPiece(CheckerParameters(nextCol, 7, Player.WHITE, CheckersMode.QUEEN))
         }
 
 
 
-        //рубка дамкой
+
         if (elemStart == CheckerParameters(startCol, startRow, Player.WHITE, CheckersMode.QUEEN)) {
             var doubleBlack = checkDouble(startCol, startRow, nextCol, nextRow)
             println("doubleBlack-")
             println(doubleBlack)
-            doubleBlack=0
-            if (elemNext ==  CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY)) {
+            doubleBlack = 0
+            if (elemNext == CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY)) {
 
                 if (((startCol - startRow == nextCol - nextRow) || (startCol + startRow == nextCol + nextRow)) && (doubleBlack == 0)) {
                     for (row in 0 until 8) {
                         for (col in 0 until 8) {
                             if (((startCol - startRow == col - row) || (startCol + startRow == col + row))) {
-                                if ((((startCol < col) && (col < nextCol)) || ((startCol > col) && (col > nextCol))) &&
-                                    ((startRow > row) && (row > nextRow)) || ((startRow < row) && (row < nextRow))
-                                ) {
+                                if ((((startCol < col) && (col < nextCol)) || ((startCol > col) && (col > nextCol))) && ((startRow > row) && (row > nextRow)) || ((startRow < row) && (row < nextRow))) {
                                     delPiece(CheckerParameters(col, row, Player.BLACK, CheckersMode.CHECKERS))
                                     addPiece(CheckerParameters(col, row, Player.EMPTY, CheckersMode.EMPTY))
                                     delPiece(CheckerParameters(col, row, Player.BLACK, CheckersMode.QUEEN))
@@ -493,41 +509,41 @@ class ModelGame {
                     addPiece(CheckerParameters(nextCol, nextRow, Player.WHITE, CheckersMode.QUEEN))
                     delPiece(CheckerParameters(startCol, startRow, Player.WHITE, CheckersMode.QUEEN))
                     addPiece(CheckerParameters(startCol, startRow, Player.EMPTY, CheckersMode.EMPTY))
-                    moveWas=true
+                    moveWas = true
                 }
 
             }
         }
         return moveWas
 
-        //state = FIRST_MOVE
+
     }
 
-    fun blackMove(startCol : Int, startRow : Int, nextCol : Int, nextRow : Int):Boolean {
+    fun blackMove(startCol : Int, startRow : Int, nextCol : Int, nextRow : Int) : Boolean {
         var elemNext : CheckerParameters?
         var elemStart : CheckerParameters?
         elemStart = pieceAt(startCol, startRow)
         elemNext = pieceAt(nextCol, nextRow)
+
         println("black")
-        var moveWas=false
+        var moveWas = false
 
-        //обычный ход
 
-        if (elemStart == CheckerParameters(startCol, startRow, Player.BLACK, CheckersMode.CHECKERS)
-        ) {
-            if (elemNext ==  CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY)) {
+
+        if (elemStart == CheckerParameters(startCol, startRow, Player.BLACK, CheckersMode.CHECKERS)) {
+            if (elemNext == CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY)) {
                 if (((startCol == nextCol + 1) || (startCol == nextCol - 1)) && (startRow - 1 == nextRow)) {
                     delPiece(CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY))
                     addPiece(CheckerParameters(nextCol, nextRow, Player.BLACK, CheckersMode.CHECKERS))
-                    moveWas=true
+                    moveWas = true
                     delPiece(CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY))
                     addPiece(CheckerParameters(nextCol, nextRow, Player.BLACK, CheckersMode.CHECKERS))
                     delPiece(CheckerParameters(startCol, startRow, Player.BLACK, CheckersMode.CHECKERS))
                     addPiece(CheckerParameters(startCol, startRow, Player.EMPTY, CheckersMode.EMPTY))
                 }
             }
-            //рубка шашка
-            if (elemNext ==  CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY)) {
+
+            if (elemNext == CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY)) {
                 var scan : Int
                 scan = (nextCol - startCol) / (abs(nextCol - startCol))
 
@@ -535,54 +551,45 @@ class ModelGame {
                     delPiece(CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY))
                     addPiece(CheckerParameters(nextCol, nextRow, Player.BLACK, CheckersMode.CHECKERS))
 
-                    moveWas=true
-                    delPiece(CheckerParameters(startCol + 1 * scan, startRow + 1,
-                        Player.WHITE, CheckersMode.CHECKERS))
-                    addPiece(CheckerParameters(startCol + 1 * scan, startRow + 1,
-                        Player.EMPTY, CheckersMode.EMPTY))
+                    moveWas = true
+                    delPiece(CheckerParameters(startCol + 1 * scan, startRow + 1, Player.WHITE, CheckersMode.CHECKERS))
+                    addPiece(CheckerParameters(startCol + 1 * scan, startRow + 1, Player.EMPTY, CheckersMode.EMPTY))
 
 
-                    delPiece(CheckerParameters(startCol, startRow,
-                        Player.BLACK, CheckersMode.CHECKERS))
+                    delPiece(CheckerParameters(startCol, startRow, Player.BLACK, CheckersMode.CHECKERS))
                     addPiece(CheckerParameters(startCol, startRow, Player.EMPTY, CheckersMode.EMPTY))
 
 
                 }
 
                 if (((startCol == nextCol + 2) || (startCol == nextCol - 2)) && (startRow - 2 == nextRow)) {
-                    moveWas=true
+                    moveWas = true
                     delPiece(CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY))
                     addPiece(CheckerParameters(nextCol, nextRow, Player.BLACK, CheckersMode.CHECKERS))
-                    delPiece(CheckerParameters(startCol + 1 * scan, startRow - 1,
-                        Player.WHITE, CheckersMode.CHECKERS))
-                    addPiece(CheckerParameters(startCol + 1 * scan, startRow - 1,
-                        Player.EMPTY, CheckersMode.EMPTY))
+                    delPiece(CheckerParameters(startCol + 1 * scan, startRow - 1, Player.WHITE, CheckersMode.CHECKERS))
+                    addPiece(CheckerParameters(startCol + 1 * scan, startRow - 1, Player.EMPTY, CheckersMode.EMPTY))
                     delPiece(CheckerParameters(startCol, startRow, Player.BLACK, CheckersMode.CHECKERS))
                     addPiece(CheckerParameters(startCol, startRow, Player.EMPTY, CheckersMode.EMPTY))
                 }
             }
         }
-        if(elemNext==(CheckerParameters(nextCol, 0, Player.BLACK, CheckersMode.CHECKERS))){
+        if (elemNext == (CheckerParameters(nextCol, 0, Player.BLACK, CheckersMode.CHECKERS))) {
             delPiece(CheckerParameters(nextCol, 0, Player.BLACK, CheckersMode.CHECKERS))
             addPiece(CheckerParameters(nextCol, 0, Player.BLACK, CheckersMode.QUEEN))
         }
-        //рубка дамкой
+
         if (elemStart == CheckerParameters(startCol, startRow, Player.BLACK, CheckersMode.QUEEN)) {
             var doubleBlack = checkDouble(startCol, startRow, nextCol, nextRow)
-            println("doubleBlack-")
-            println(doubleBlack)
-            println("-")
-            doubleBlack=0
+
+            doubleBlack = 0
             var check = 0
-            if (elemNext ==  CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY)) {
+            if (elemNext == CheckerParameters(nextCol, nextRow, Player.EMPTY, CheckersMode.EMPTY)) {
 
                 if (((startCol - startRow == nextCol - nextRow) || (startCol + startRow == nextCol + nextRow)) && (doubleBlack == 0)) {
                     for (row in 0 until 8) {
                         for (col in 0 until 8) {
                             if (((startCol - startRow == col - row) || (startCol + startRow == col + row))) {
-                                if ((((startCol < col) && (col < nextCol)) || ((startCol > col) && (col > nextCol))) &&
-                                    ((startRow < row) && (row < nextRow)) || ((startRow > row) && (row > nextRow))
-                                ) {
+                                if ((((startCol < col) && (col < nextCol)) || ((startCol > col) && (col > nextCol))) && ((startRow < row) && (row < nextRow)) || ((startRow > row) && (row > nextRow))) {
                                     delPiece(CheckerParameters(col, row, Player.WHITE, CheckersMode.CHECKERS))
                                     addPiece(CheckerParameters(col, row, Player.EMPTY, CheckersMode.EMPTY))
                                     delPiece(CheckerParameters(col, row, Player.WHITE, CheckersMode.QUEEN))
@@ -596,12 +603,12 @@ class ModelGame {
                     addPiece(CheckerParameters(nextCol, nextRow, Player.BLACK, CheckersMode.QUEEN))
                     delPiece(CheckerParameters(startCol, startRow, Player.BLACK, CheckersMode.QUEEN))
                     addPiece(CheckerParameters(startCol, startRow, Player.EMPTY, CheckersMode.EMPTY))
-                    moveWas=true
+                    moveWas = true
                 }
 
             }
         }
-         return moveWas
+        return moveWas
     }
 
     fun boardRow(row : Int) : String {
@@ -622,7 +629,6 @@ class ModelGame {
         return desc
     }
 
-
     private val listeners : MutableSet<ModelChangeListener> = mutableSetOf()
 
     fun addModelChangeListener(listener : ModelChangeListener) {
@@ -636,37 +642,6 @@ class ModelGame {
     private fun notifyListeners() {
         listeners.forEach { it.onModelChanged() }
     }
-
 }
 
 
-/*if (((checkColor( nextRow,nextCol))&&(checkColor( startRow,startCol)))||
-                    ((!checkColor(nextRow,nextCol))&&(!checkColor(startRow,startCol)))){ //одинаковые белые или черные
-                 print ("сюда нельзя ходить!!")
-            }
-            else {
-
-
-            }*/
-
-
-//ход дамки
-/*if ((elemStart == CheckerParameters(startCol, startRow, Player.WHITE, CheckersMode.QUEEN))) {
-    if (elemNext == null) {
-
-        if ((startCol - startRow == nextCol - nextRow) || (startCol + startRow == nextCol + nextRow)) {
-            addPiece(CheckerParameters(nextCol, nextRow, Player.WHITE, CheckersMode.QUEEN))
-            delPiece(CheckerParameters(startCol, startRow, Player.WHITE, CheckersMode.QUEEN))
-        }
-    }
-}
-
-if (elemStart == CheckerParameters(startCol, startRow, Player.BLACK, CheckersMode.QUEEN)) {
-    if (elemNext == null) {
-
-        if ((startCol - startRow == nextCol - nextRow) || (startCol + startRow == nextCol + nextRow)) {
-            addPiece(CheckerParameters(nextCol, nextRow, Player.BLACK, CheckersMode.QUEEN))
-            delPiece(CheckerParameters(startCol, startRow, Player.BLACK, CheckersMode.QUEEN))
-        }
-    }
-}*/

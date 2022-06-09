@@ -6,14 +6,14 @@ import java.awt.*
 import javax.swing.*
 
 private const val GAP = 0
-var ROW = 0
-var COL = 0
-var ROWto = 0
-var COLto = 0
-var COUNT = 0
-var inTo = 1
 
 class UI : JFrame("Checkers Game"), ModelChangeListener {
+    var ROW = 0
+    var COL = 0
+    var ROWto = 0
+    var COLto = 0
+    var COUNT = 0
+    var inTo = 1
     private var gameModel : ModelGame = ModelGame()
     var statusLabel = JLabel("Move", JLabel.CENTER)
     private val buttons = mutableListOf<MutableList<JButton>>()
@@ -41,22 +41,20 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
         updateFont(restartButton, 20.0f)
         restartButton.addActionListener {
             if (gameModel.state in GAME_NOT_FINISHED) {
-                val dialogOption = JOptionPane.showConfirmDialog(
-                    this,
-                    "Game not finished, are you sure?",
+                val dialogOption = JOptionPane.showConfirmDialog(this,
+                    "are you sure to restart this game?",
                     "Restart",
-                    JOptionPane.OK_CANCEL_OPTION
-                )
+                    JOptionPane.OK_CANCEL_OPTION)
 
                 if (dialogOption == JOptionPane.OK_OPTION) {
                     gameModel.removeModelChangeListener(this)
-                    gameModel  = ModelGame()
+                    gameModel = ModelGame()
                     gameModel.addModelChangeListener(this)
                     updateGameUI()
                 }
             } else {
                 gameModel.removeModelChangeListener(this)
-                gameModel  = ModelGame()
+                gameModel = ModelGame()
                 gameModel.addModelChangeListener(this)
                 updateGameUI()
             }
@@ -108,7 +106,6 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
                         ROWto = i
                         COLto = j
                         gameLogic()
-                        //updateGameUI()
                         COUNT = 0
                     }
 
@@ -194,7 +191,7 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
         return counter
     }
 
-    private fun checkWinBlack():Int {
+    private fun checkWinBlack() : Int {
         var counter = 0
         gameModel.piecesBoard.forEach {
             if (it.player == Player.BLACK) {
@@ -206,47 +203,37 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
 
     fun gameLogic() {
 
-        if ((checkWinWhite()!=0)&&(checkWinBlack()!=0)) {
+        if ((checkWinWhite() != 0) && (checkWinBlack() != 0)) {
 
             if (inTo.mod(2) != 0) {
-                // gameModel.state=State.WHITE_MOVE
-
                 if (gameModel.whiteMove(COL, ROW, COLto, ROWto) == true) {
                     gameModel.whiteMove(COL, ROW, COLto, ROWto)
                     inTo++
                     println()
                     println(inTo)
                     println()
-                    gameModel.state=State.BLACK_MOVE
-                    if(checkWinWhite()==0)  gameModel.state=State.BLACK_WIN
-                    if(checkWinBlack()==0)  gameModel.state=State.WHITE_WIN
+                    gameModel.state = State.BLACK_MOVE
+                    if (checkWinWhite() == 0) gameModel.state = State.BLACK_WIN
+                    if (checkWinBlack() == 0) gameModel.state = State.WHITE_WIN
                 }
                 updateGameUI()
             } else {
-                //gameModel.state=State.BLACK_MOVE
-
                 if (gameModel.blackMove(COL, ROW, COLto, ROWto) == true) {
-
                     gameModel.blackMove(COL, ROW, COLto, ROWto)
                     inTo++
                     println()
                     println(inTo)
                     println()
-                    gameModel.state=State.WHITE_MOVE
-                    if(checkWinWhite()==0)  gameModel.state=State.BLACK_WIN
-                    if(checkWinBlack()==0)  gameModel.state=State.WHITE_WIN
+                    gameModel.state = State.WHITE_MOVE
+                    if (checkWinWhite() == 0) gameModel.state = State.BLACK_WIN
+                    if (checkWinBlack() == 0) gameModel.state = State.WHITE_WIN
                 }
                 updateGameUI()
             }
+        } else {
+            if (checkWinWhite() == 0) gameModel.state = State.BLACK_WIN
+            if (checkWinBlack() == 0) gameModel.state = State.WHITE_WIN
         }
-        else{
-            if(checkWinWhite()==0)  gameModel.state=State.BLACK_WIN
-            if(checkWinBlack()==0)  gameModel.state=State.WHITE_WIN
-        }
-
-
-
-
         ROW = 0
         COL = 0
         ROWto = 0
@@ -256,9 +243,3 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
 
 }
 
-/* print(COL)
-        print(ROW)
-        println(gameModel.pieceAt(COL, ROW))
-        print(COLto)
-        print(ROWto)
-        println(gameModel.pieceAt(COLto, ROWto))*/
