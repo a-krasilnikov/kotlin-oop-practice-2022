@@ -1,5 +1,4 @@
 package CheckersGame
-
 import CheckersGame.View.UI
 import javax.swing.SwingUtilities
 
@@ -23,6 +22,10 @@ fun main() {
     println(pgnBoard())*/
     SwingUtilities.invokeLater {
         val ticTacToeUi = UI()
+
         ticTacToeUi.isVisible = true
+
     }
+    /*val ToeUi = UI()
+    ToeUi.gameLogic()*/
 }

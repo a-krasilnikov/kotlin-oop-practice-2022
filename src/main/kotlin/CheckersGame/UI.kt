@@ -1,18 +1,26 @@
 package CheckersGame.View
+
 import CheckersGame.*
 import CheckersGame.ImageCheckers.nameImage
 import java.awt.*
 import javax.swing.*
 
 private const val GAP = 0
+var ROW = 0
+var COL = 0
+var ROWto = 0
+var COLto = 0
+var COUNT = 0
+var inTo = 1
 
 class UI : JFrame("Checkers Game"), ModelChangeListener {
-    private var gameModel: ModelGame = ModelGame()
-    private val statusLabel = JLabel("Status", JLabel.CENTER)
+    private var gameModel : ModelGame = ModelGame()
+    var statusLabel = JLabel("Move", JLabel.CENTER)
     private val buttons = mutableListOf<MutableList<JButton>>()
-    private var BOARD_SIZE=8
+    private var BOARD_SIZE = 8
+
     init {
-        setSize(1000, 1000)
+        setSize(900, 830)
         defaultCloseOperation = EXIT_ON_CLOSE
 
         updateFont(statusLabel, 20.0f)
@@ -25,9 +33,10 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
         }
 
         resubscribe()
+
     }
 
-    private fun createRestartButton(): Component {
+    private fun createRestartButton() : Component {
         val restartButton = JButton("Restart")
         updateFont(restartButton, 20.0f)
         restartButton.addActionListener {
@@ -40,10 +49,16 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
                 )
 
                 if (dialogOption == JOptionPane.OK_OPTION) {
-                    resubscribe()
+                    gameModel.removeModelChangeListener(this)
+                    gameModel  = ModelGame()
+                    gameModel.addModelChangeListener(this)
+                    updateGameUI()
                 }
             } else {
-                resubscribe()
+                gameModel.removeModelChangeListener(this)
+                gameModel  = ModelGame()
+                gameModel.addModelChangeListener(this)
+                updateGameUI()
             }
         }
 
@@ -52,44 +67,52 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
 
     private fun resubscribe() {
         gameModel.removeModelChangeListener(this)
-        gameModel = ModelGame()
         gameModel.addModelChangeListener(this)
         updateGameUI()
-
     }
 
-    private fun createBoardPanel(): Component {
+    private fun createBoardPanel() : Component {
         val gamePanel = JPanel(GridLayout(BOARD_SIZE, BOARD_SIZE, GAP, GAP))
-
-        for (i in BOARD_SIZE-1 downTo  0) {
+        //gameModel.resetGame()
+        for (i in 0 until BOARD_SIZE) {
             val buttonsRow = mutableListOf<JButton>()
 
             for (j in 0 until BOARD_SIZE) {
 
-                val cellButton =  JButton(" ")
+                val cellButton = JButton(" ")
 
                 if (i.mod(2) != 0) {
 
-                        if (j.mod(2) != 0) {
-                            cellButton.background=Color.lightGray
-                        }
-                        else{
-                            cellButton.background=Color.WHITE
-                        }
+                    if (j.mod(2) == 0) {
+                        cellButton.background = Color.lightGray
+                    } else {
+                        cellButton.background = Color.WHITE
+                    }
 
                 } else {
-                        if (j.mod(2) == 0) {
-                            cellButton.background=Color.lightGray
+                    if (j.mod(2) != 0) {
+                        cellButton.background = Color.lightGray
 
-                        }
-                    else{
-                            cellButton.background=Color.WHITE
+                    } else {
+                        cellButton.background = Color.WHITE
                     }
                 }
 
 
                 cellButton.addActionListener {
-                    gameModel.moveCheckers(i,j,3,4,0)
+                    if (COUNT == 0) {
+                        ROW = i
+                        COL = j
+                        COUNT++
+                    } else {
+                        ROWto = i
+                        COLto = j
+                        gameLogic()
+                        //updateGameUI()
+                        COUNT = 0
+                    }
+
+
                 }
 
                 buttonsRow.add(cellButton)
@@ -102,7 +125,7 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
         return gamePanel
     }
 
-    private fun updateFont(component: JComponent, newFontSize: Float) {
+    private fun updateFont(component : JComponent, newFontSize : Float) {
         val font = component.font
         val derivedFont = font.deriveFont(newFontSize)
         component.font = derivedFont
@@ -117,40 +140,125 @@ class UI : JFrame("Checkers Game"), ModelChangeListener {
         statusLabel.text = state.textValue
 
         gameModel.piecesBoard.forEach {
-         print(it.row.toString() + " " + it.col.toString() + " | ")
-            if(it.Checker == CheckersMode.CHECKERS && it.player == Player.WHITE) {
+            if (it.Checker == CheckersMode.EMPTY && it.player == Player.EMPTY) {
+                buttons[it.row][it.col].icon = null
+            }
+
+            if (it.Checker == CheckersMode.CHECKERS && it.player == Player.WHITE) {
                 buttons[it.row][it.col].apply {
-                    background=Color.lightGray
+                    print(it.col.toString() + " " + it.row.toString() + " |-WC ")
+                    background = Color.lightGray
                     icon = ImageIcon(nameImage.whiteChecker.getScaledInstance(60, 60, Image.SCALE_SMOOTH))
                 }
             }
 
-            if(it.Checker == CheckersMode.CHECKERS && it.player == Player.BLACK) {
+            if (it.Checker == CheckersMode.CHECKERS && it.player == Player.BLACK) {
                 buttons[it.row][it.col].apply {
-                    background=Color.lightGray
+                    print(it.col.toString() + " " + it.row.toString() + " |BC ")
+                    background = Color.lightGray
                     icon = ImageIcon(nameImage.blackChecker.getScaledInstance(60, 60, Image.SCALE_SMOOTH))
 
                 }
             }
 
-            if(it.Checker == CheckersMode.QUEEN && it.player == Player.WHITE) {
+            if (it.Checker == CheckersMode.QUEEN && it.player == Player.WHITE) {
                 buttons[it.row][it.col].apply {
-                    background=Color.lightGray
+                    background = Color.lightGray
                     icon = ImageIcon(nameImage.whiteQueen.getScaledInstance(60, 60, Image.SCALE_SMOOTH))
 
                 }
             }
 
-            if(it.Checker == CheckersMode.QUEEN && it.player == Player.BLACK) {
+            if (it.Checker == CheckersMode.QUEEN && it.player == Player.BLACK) {
                 buttons[it.row][it.col].apply {
-                    background=Color.lightGray
+                    background = Color.lightGray
                     icon = ImageIcon(nameImage.blackQueen.getScaledInstance(60, 60, Image.SCALE_SMOOTH))
 
                 }
             }
+
+
+        }
+        println()
+    }
+
+    private fun checkWinWhite() : Int {
+        var counter = 0
+        gameModel.piecesBoard.forEach {
+
+            if (it.player == Player.WHITE) {
+                counter++
+            }
+
+        }
+        return counter
+    }
+
+    private fun checkWinBlack():Int {
+        var counter = 0
+        gameModel.piecesBoard.forEach {
+            if (it.player == Player.BLACK) {
+                counter++
+            }
+        }
+        return counter
+    }
+
+    fun gameLogic() {
+
+        if ((checkWinWhite()!=0)&&(checkWinBlack()!=0)) {
+
+            if (inTo.mod(2) != 0) {
+                // gameModel.state=State.WHITE_MOVE
+
+                if (gameModel.whiteMove(COL, ROW, COLto, ROWto) == true) {
+                    gameModel.whiteMove(COL, ROW, COLto, ROWto)
+                    inTo++
+                    println()
+                    println(inTo)
+                    println()
+                    gameModel.state=State.BLACK_MOVE
+                    if(checkWinWhite()==0)  gameModel.state=State.BLACK_WIN
+                    if(checkWinBlack()==0)  gameModel.state=State.WHITE_WIN
+                }
+                updateGameUI()
+            } else {
+                //gameModel.state=State.BLACK_MOVE
+
+                if (gameModel.blackMove(COL, ROW, COLto, ROWto) == true) {
+
+                    gameModel.blackMove(COL, ROW, COLto, ROWto)
+                    inTo++
+                    println()
+                    println(inTo)
+                    println()
+                    gameModel.state=State.WHITE_MOVE
+                    if(checkWinWhite()==0)  gameModel.state=State.BLACK_WIN
+                    if(checkWinBlack()==0)  gameModel.state=State.WHITE_WIN
+                }
+                updateGameUI()
+            }
+        }
+        else{
+            if(checkWinWhite()==0)  gameModel.state=State.BLACK_WIN
+            if(checkWinBlack()==0)  gameModel.state=State.WHITE_WIN
         }
 
+
+
+
+        ROW = 0
+        COL = 0
+        ROWto = 0
+        COLto = 0
     }
 
 
 }
+
+/* print(COL)
+        print(ROW)
+        println(gameModel.pieceAt(COL, ROW))
+        print(COLto)
+        print(ROWto)
+        println(gameModel.pieceAt(COLto, ROWto))*/

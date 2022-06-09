@@ -15,13 +15,10 @@ object ImageCheckers {
 
     private fun findImage(): nameImg {
         return nameImg(
-
-
             ImageIcon("src/main/resources/checkerWhite.png").image,
             ImageIcon("src/main/resources/checkerBlack.png").image,
             ImageIcon("src/main/resources/whiteQ.png").image,
             ImageIcon("src/main/resources/blackQ.png").image,
-
         )
     }
     val nameImage = findImage()

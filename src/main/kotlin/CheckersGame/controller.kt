@@ -9,10 +9,18 @@ class Controller(private val model: ModelGame) {
         while (model.state in GAME_NOT_FINISHED) {
             val input = readln()
             try {
-                val col = input.substringBefore(" ").toInt() - 1
-                val row = input.substringAfter(" ").toInt() - 1
+                val colStart = input.substringBefore(" ").toInt() - 1
+                val rowStart = input.substringAfter(" ").toInt() - 1
+                val colEnd = input.substringBefore(" ").toInt() - 1
+                val rowEnd = input.substringAfter(" ").toInt() - 1
+                println(colStart)
+                print(rowStart)
+                println("---")
 
-                //model.doMove(col, row)
+                println(colEnd)
+                print(rowEnd)
+
+                //model.moveCheckers(colStart, colStart,colEnd,rowEnd)
             } catch (e: Exception) {
                 println(e.message)
             }
